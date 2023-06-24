@@ -1,0 +1,11 @@
+name: APResidence
+main: com.alazeprt.APResidence
+version: 1.0.1
+api-version: 1.13
+softdepend:
+  - Vault
+author: alazeprt
+description: 一个普普通通的由alazeprt编写的领地插件
+commands:
+  apres:
+    description: APResidence插件主指令
