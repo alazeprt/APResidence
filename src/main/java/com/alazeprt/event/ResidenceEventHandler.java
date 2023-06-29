@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import static com.alazeprt.APResidence.getPrefixW;
 import static com.alazeprt.APResidence.preResidence;
 
-public class CreateResidenceEventHandler implements Listener {
+public class ResidenceEventHandler implements Listener {
     @EventHandler
     public void onPlayerTake(PlayerItemHeldEvent event){
         ItemStack item = event.getPlayer().getInventory().getItem(event.getNewSlot());
@@ -68,7 +68,7 @@ public class CreateResidenceEventHandler implements Listener {
                         preResidence.add(preRes);
                     }
                 } else if(item.getType().equals(Material.STICK)){
-                    Residence residence = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+                    Residence residence = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
                     if(residence == null){
                         event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "这里没有领地!你可以在这里创建领地!");
                     } else {
