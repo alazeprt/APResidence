@@ -66,25 +66,22 @@ public class Residence {
         List<Residence> residences = new ArrayList<>();
         int maxid = getMaxId();
         for(int id = 1;id<=maxid;id++){
-            if(data.contains("residence." + id + ".location1") || data.contains("residence." + id + ".location2") || data.contains("residence." + id + ".player")){
+            if(data.contains("residence." + id + ".location1") && data.contains("residence." + id + ".location2") && data.contains("residence." + id + ".player")){
                 residences.add(new Residence(data.getLocation("residence." + id + ".location1"), data.getLocation("residence." + id + ".location2"), Bukkit.getPlayer(data.getString("residence." + id + ".player")), id));
-                id++;
-            } else{
-                break;
             }
         }
         return residences;
     }
 
+    @Deprecated
     public static List<Residence> getResidenceList(Player player){
         List<Residence> residences = new ArrayList<>();
-        int id = 1;
-        while(true){
-            if(data.contains("residence." + id + ".location1") || data.contains("residence." + id + ".location2") || data.contains("residence." + id + ".player")){
-                residences.add(new Residence(data.getLocation("residence." + id + ".location1"), data.getLocation("residence." + id + ".location2"), Bukkit.getPlayer(data.getString("residence." + id + ".player")), id));
-                id++;
-            } else{
-                break;
+        int maxid = getMaxId();
+        for(int id = 1;id<=maxid;id++){
+            if(data.contains("residence." + id + ".location1") && data.contains("residence." + id + ".location2") && data.contains("residence." + id + ".player")){
+                if(data.getString("residence." + id + ".player").equals(player.getName())){
+                    residences.add(new Residence(data.getLocation("residence." + id + ".location1"), data.getLocation("residence." + id + ".location2"), Bukkit.getPlayer(data.getString("residence." + id + ".player")), id));
+                }
             }
         }
         return residences;
@@ -127,12 +124,12 @@ public class Residence {
         }
     }
 
-    private static boolean isPlayerInRegion(Location playerLocation, Location res1, Location res2) {
+    private static boolean isPlayerInRegion(Location location, Location res1, Location res2) {
         double x1 = Math.min(res1.getBlockX(), res2.getBlockX());
         double x2 = Math.max(res1.getBlockX(), res2.getBlockX());
         double z1 = Math.min(res1.getBlockZ(), res2.getBlockZ());
         double z2 = Math.max(res1.getBlockZ(), res2.getBlockZ());
 
-        return playerLocation.getBlockX() >= x1 && playerLocation.getBlockX() <= x2 && playerLocation.getBlockZ() >= z1 && playerLocation.getBlockZ() <= z2;
+        return location.getBlockX() >= x1 && location.getBlockX() <= x2 && location.getBlockZ() >= z1 && location.getBlockZ() <= z2;
     }
 }
