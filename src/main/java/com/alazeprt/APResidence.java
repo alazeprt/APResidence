@@ -1,6 +1,8 @@
 package com.alazeprt;
 
 import com.alazeprt.command.RegisterCommmand;
+import com.alazeprt.event.RegisterEvent;
+import com.alazeprt.util.PreResidence;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,9 +10,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class APResidence extends JavaPlugin {
+    public static List<PreResidence> preResidence = new ArrayList<>();
     public static FileConfiguration data;
     public static FileConfiguration config;
     public static Economy econ;
@@ -43,6 +47,8 @@ public class APResidence extends JavaPlugin {
         data = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "data.yml"));
         getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
+        getLogger().info("正在注册监听器...");
+        RegisterEvent.register(this);
         getLogger().info("APResidence 插件加载成功!");
     }
 

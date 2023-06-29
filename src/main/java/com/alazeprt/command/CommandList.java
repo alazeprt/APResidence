@@ -8,7 +8,7 @@ import java.util.List;
 
 import static com.alazeprt.APResidence.getPrefixW;
 
-public class CommandList extends ExampleCommand {
+public class CommandList extends PluginCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         List<Residence> list = Residence.getResidenceList(player);

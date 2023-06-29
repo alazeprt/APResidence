@@ -2,7 +2,7 @@ package com.alazeprt.command;
 
 import org.bukkit.entity.Player;
 
-public class ExampleCommand {
+public class PluginCommand {
     public void executeCommand(Player player, String[] args){
 
     }

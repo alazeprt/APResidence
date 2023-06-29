@@ -1,12 +1,11 @@
 package com.alazeprt.command;
 
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import static com.alazeprt.APResidence.*;
 
-public class CommandHelp extends ExampleCommand {
+public class CommandHelp extends PluginCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         player.sendMessage(getPrefixH());

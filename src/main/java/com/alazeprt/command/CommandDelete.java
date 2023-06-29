@@ -1,14 +1,13 @@
 package com.alazeprt.command;
 
 import com.alazeprt.util.Residence;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import static com.alazeprt.APResidence.getPrefixW;
 
-public class CommandDelete extends ExampleCommand {
+public class CommandDelete extends PluginCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         Location location = player.getLocation();
