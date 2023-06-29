@@ -15,7 +15,7 @@ public class CommandList extends PluginCommand {
         player.sendMessage(getPrefixW() + ChatColor.GREEN + "领地列表(" + list.size() + ", 记录为x, z坐标): ");
         int i = 1;
         for(Residence residence : list){
-            if(residence.getPlayer().equals(player)){
+            if(residence.getSavedPlayer().equals(player.getName())){
                 String id = ChatColor.GREEN + "领地ID: " + residence.getId();
                 String x = ChatColor.GREEN + "起始位置: " + residence.getLocation().getKey().getBlockX() + ", " + residence.getLocation().getKey().getBlockZ();
                 String z = ChatColor.GREEN + "终止位置: " + residence.getLocation().getValue().getBlockX() + ", " + residence.getLocation().getValue().getBlockZ();

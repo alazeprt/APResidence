@@ -15,7 +15,7 @@ public class CommandDelete extends PluginCommand {
         if(residence == null){
             player.sendMessage(getPrefixW() + ChatColor.RED + "此处没有领地!");
         } else {
-            if(player.equals(residence.getPlayer())){
+            if(player.getName().equals(residence.getSavedPlayer())){
                 residence.remove();
                 player.sendMessage(getPrefixW() + ChatColor.GREEN + "删除成功!");
             } else {

@@ -15,7 +15,7 @@ public class ContainerEventHandler implements Listener {
     public void onPlayerInterfact(PlayerInteractEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 Material clickedBlockMaterial = event.getClickedBlock().getBlockData().getMaterial();
                 if (clickedBlockMaterial.equals(Material.CHEST) || clickedBlockMaterial.equals(Material.BARREL) || clickedBlockMaterial.equals(Material.HOPPER) || clickedBlockMaterial.equals(Material.CHEST_MINECART) || clickedBlockMaterial.equals(Material.HOPPER_MINECART) || clickedBlockMaterial.equals(Material.TRAPPED_CHEST) || clickedBlockMaterial.name().endsWith("_SHULKER_BOX")) {
                     event.setCancelled(true);

@@ -29,8 +29,8 @@ public class Residence {
         return new Pair<>(location1, location2);
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getSavedPlayer() {
+        return player.getName();
     }
 
     public Integer getId() {

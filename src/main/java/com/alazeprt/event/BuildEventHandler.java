@@ -15,7 +15,7 @@ public class BuildEventHandler implements Listener {
     public void onPlace(BlockPlaceEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中建造!");
             }
@@ -26,7 +26,7 @@ public class BuildEventHandler implements Listener {
     public void onBreak(BlockBreakEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中建造!");
             }

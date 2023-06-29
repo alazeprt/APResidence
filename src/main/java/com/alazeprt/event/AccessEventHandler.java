@@ -15,7 +15,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerSleep(PlayerBedEnterEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中使用床!");
             }
@@ -26,7 +26,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerDrop(PlayerDropItemEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中丢弃物品!");
             }
@@ -37,7 +37,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerEgg(PlayerEggThrowEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.getEgg().remove();
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中丢弃物品!");
             }
@@ -48,7 +48,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerFish(PlayerFishEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中丢弃物品!");
             }
@@ -59,7 +59,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerPortal(PlayerPortalEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中穿过传送门!");
             }
@@ -70,7 +70,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中与生物交互!");
             }
@@ -81,7 +81,7 @@ public class AccessEventHandler implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event){
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
-            if(!res.getPlayer().equals(event.getPlayer())){
+            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 if(event.getAction() == Action.PHYSICAL){
                     if(event.getClickedBlock().getType().equals(Material.FARMLAND) || event.getClickedBlock().getType().equals(Material.TURTLE_EGG)){
                         event.setCancelled(true);
