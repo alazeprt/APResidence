@@ -13,7 +13,7 @@ public class ContainerEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerInterfact(PlayerInteractEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 Material clickedBlockMaterial = event.getClickedBlock().getBlockData().getMaterial();

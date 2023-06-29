@@ -1,6 +1,7 @@
 package com.alazeprt.event;
 
 import com.alazeprt.util.Residence;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,7 @@ import static com.alazeprt.APResidence.getPrefixW;
 public class AccessEventHandler implements Listener {
     @EventHandler
     public void onPlayerSleep(PlayerBedEnterEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getBed().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
@@ -24,7 +25,7 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getItemDrop().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
@@ -35,7 +36,7 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerEgg(PlayerEggThrowEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getEgg().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.getEgg().remove();
@@ -46,7 +47,7 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerFish(PlayerFishEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getHook().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
@@ -68,7 +69,7 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getRightClicked().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
@@ -79,7 +80,7 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 if(event.getAction() == Action.PHYSICAL){
@@ -94,8 +95,6 @@ public class AccessEventHandler implements Listener {
                         event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地上与方块交互!");
                     }
                 }
-                event.setCancelled(true);
-                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中与方块交互!");
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.alazeprt.event;
 
 import com.alazeprt.util.Residence;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +14,7 @@ public class BuildEventHandler implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getBlock().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
@@ -24,7 +25,7 @@ public class BuildEventHandler implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
+        Residence res = Residence.getResidenceByLocation(event.getBlock().getLocation());
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
