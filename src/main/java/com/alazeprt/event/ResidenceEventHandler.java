@@ -36,7 +36,7 @@ public class ResidenceEventHandler implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event){
         ItemStack item = event.getItem();
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
-            if(item != null){
+            if(item != null && event.getClickedBlock() != null){
                 if(item.getType().equals(Material.GOLDEN_SHOVEL)){
                     boolean hasPreResidence = false;
                     PreResidence preRes = null;
