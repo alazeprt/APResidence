@@ -13,17 +13,6 @@ import static com.alazeprt.APResidence.getPrefixW;
 
 public class AccessEventHandler implements Listener {
     @EventHandler
-    public void onPlayerSleep(PlayerBedEnterEvent event){
-        Residence res = Residence.getResidenceByLocation(event.getBed().getLocation());
-        if(res != null){
-            if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
-                event.setCancelled(true);
-                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中使用床!");
-            }
-        }
-    }
-
-    @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event){
         Residence res = Residence.getResidenceByLocation(event.getItemDrop().getLocation());
         if(res != null){
@@ -40,6 +29,7 @@ public class AccessEventHandler implements Listener {
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.getEgg().remove();
+                event.setHatching(false);
                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中丢弃物品!");
             }
         }
@@ -51,7 +41,7 @@ public class AccessEventHandler implements Listener {
         if(res != null){
             if(!res.getSavedPlayer().equals(event.getPlayer().getName())){
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中丢弃物品!");
+                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中钓鱼!");
             }
         }
     }

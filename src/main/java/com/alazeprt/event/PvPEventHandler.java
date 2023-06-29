@@ -1,6 +1,7 @@
 package com.alazeprt.event;
 
 import com.alazeprt.util.Residence;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,25 +20,25 @@ public class PvPEventHandler implements Listener {
                 if(residence1 != null){
                     if(residence1.getSavedPlayer().equals(player1.getName()) || residence1.getSavedPlayer().equals(player2.getName())){
                         event.setCancelled(true);
-                        player1.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
-                        player2.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
+                        player1.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
+                        player2.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
                     }
                 } else if(residence2 != null){
                     if(residence2.getSavedPlayer().equals(player1.getName()) || residence2.getSavedPlayer().equals(player2.getName())){
                         event.setCancelled(true);
-                        player1.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
-                        player2.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
+                        player1.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
+                        player2.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
                     }
                 } else{
                     if(residence1.getSavedPlayer().equals(player1.getName()) || residence1.getSavedPlayer().equals(player2.getName())){
                         event.setCancelled(true);
-                        player1.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
-                        player2.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
+                        player1.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
+                        player2.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
                     }
                     if(residence2.getSavedPlayer().equals(player1.getName()) || residence2.getSavedPlayer().equals(player2.getName())){
                         event.setCancelled(true);
-                        player1.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
-                        player2.sendMessage(getPrefixW() + "你不能在你或对方的领地与对方内PvP!");
+                        player1.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
+                        player2.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你或对方的领地与对方内PvP!");
                     }
                 }
             }
@@ -47,7 +48,7 @@ public class PvPEventHandler implements Listener {
                 if(Residence.getResidenceByLocation(player.getLocation()) != null){
                     if(!Residence.getResidenceByLocation(player.getLocation()).getSavedPlayer().equals(player.getName())){
                         event.setCancelled(true);
-                        player.sendMessage("你不能在他人的领地上攻击生物!");
+                        player.sendMessage(getPrefixW() + ChatColor.RED + "你不能在他人的领地上攻击生物!");
                     }
                 }
             }
