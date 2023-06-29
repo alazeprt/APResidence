@@ -37,25 +37,33 @@ public class CreateResidenceEventHandler implements Listener {
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
             if(item != null){
                 if(item.getType().equals(Material.GOLDEN_SHOVEL)){
+                    boolean hasPreResidence = false;
+                    PreResidence preRes = null;
                     for(PreResidence preres : preResidence){
                         if(preres.getPlayer().equals(event.getPlayer())){
-                            if(event.getClickedBlock() != null){
-                                if(preres.hasLocation1()){
-                                    preres.setLocation2(event.getClickedBlock().getLocation());
-                                    if(preres.canCreate()){
-                                        preres.create();
-                                        event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "领地创建成功!");
-                                        preResidence.remove(preres);
-                                    } else {
-                                        event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "领地创建失败! 请尝试重新创建或联系管理员!");
-                                        preResidence.remove(preres);
-                                    }
-                                } else {
-                                    preres.setLocation1(event.getClickedBlock().getLocation());
-                                    event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "你已成功设置第一个点! 接着请继续使用右键设置第二个点!");
-                                }
+                            hasPreResidence = true;
+                            preRes = preres;
+                        }
+                    }
+                    if(hasPreResidence){
+                        if(!preRes.hasLocation1()){
+                            // 设置Location1
+                            preRes.setLocation1(event.getClickedBlock().getLocation());
+                            event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "成功设置领地的第一个点! 接着请继续右键第二个点以创建领地, 或切换到其他物品上放弃创建");
+                        } else {
+                            // 设置Location2 & 创建 & 销毁数据
+                            preRes.setLocation2(event.getClickedBlock().getLocation());;
+                            if(preRes.canCreate()){
+                                preRes.create();
+                                event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "成功创建领地!");
+                                preResidence.remove(preRes);
                             }
                         }
+                    } else {
+                        // 没有已设置领地, 设置Location1
+                        preRes = new PreResidence(event.getPlayer());
+                        preRes.setLocation1(event.getClickedBlock().getLocation());
+                        event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "成功设置领地的第一个点! 接着请继续右键第二个点以创建领地, 或切换到其他物品上放弃创建");
                     }
                 } else if(item.getType().equals(Material.STICK)){
                     Residence residence = Residence.getResidenceByLocation(event.getPlayer().getLocation());
