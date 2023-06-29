@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.alazeprt"
-version = "1.0.2-SNAPSHOT"
+version = "1.0.3-SNAPSHOT"
 
 repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
 }
 
