@@ -62,6 +62,34 @@ public class ResidenceManager {
         }
     }
 
+    public boolean removeAllPermission(OfflinePlayer player){
+        List<String> list;
+        if(hasPermissionSetting() && data.getStringList("residence." + id + ".permissions").size() != 0){
+            list = data.getStringList("residence." + id + ".permissions");
+        } else {
+            return false;
+        }
+        boolean change = false;
+        for(String string : list){
+            String[] strings = string.split(";");
+            if(strings[0].equals(player.getName())){
+                change = true;
+                list.remove(string);
+            }
+        }
+        if(!change){
+            return false;
+        } else {
+            data.set("residence." + id + ".permissions", list);
+            try {
+                data.save(new File(DataFolder, "data.yml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+    }
+
     public boolean hasPermissionSetting(){
         if(data.contains("residence." + id + ".permissions")){
             return true;
