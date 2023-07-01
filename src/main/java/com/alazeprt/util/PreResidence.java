@@ -13,7 +13,12 @@ public class PreResidence {
 
     public boolean canCreate(){
         if(location1 != null && location2 != null){
-            return true;
+            Residence residence = new Residence(location1, location2, player, Residence.getMaxId()+2);
+            if(!residence.found()){
+                return true;
+            } else{
+                return false;
+            }
         } else {
             return false;
         }

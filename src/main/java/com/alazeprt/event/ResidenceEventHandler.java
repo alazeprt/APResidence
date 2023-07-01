@@ -58,6 +58,8 @@ public class ResidenceEventHandler implements Listener {
                                 preRes.create();
                                 event.getPlayer().sendMessage(getPrefixW() + ChatColor.GREEN + "成功创建领地!");
                                 preResidence.remove(preRes);
+                            } else {
+                                event.getPlayer().sendMessage(ChatColor.RED + "这里已经有领地了! 你无法再在这里创建领地!");
                             }
                         }
                     } else {

@@ -54,6 +54,15 @@ public class Residence {
         }
     }
 
+    public boolean found(){
+        for(Residence residence : getResidenceList()){
+            if(isOfflinePlayerInRegion(location1, residence.location1, residence.location2) || isOfflinePlayerInRegion(location2, residence.location1, residence.location2)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean exist(){
         if(data.contains("residence." + id + ".location1") && data.contains("residence." + id + ".location2") && data.contains("residence." + id + ".player")){
             return true;
