@@ -50,6 +50,10 @@ public class CommandPermission extends ExampleCommand {
             return;
         }
         OfflinePlayer player1 = Bukkit.getOfflinePlayer(args[2]);
+        if(Objects.equals(player.getName(), player1.getName())){
+            player.sendMessage(getPrefixW() + ChatColor.RED + "你不能给自己添加权限!");
+            return;
+        }
         if(args.length == 3 && args[1].equals("remove")){
             boolean end = manager.removeAllPermission(player1);
             if(!end){
@@ -76,6 +80,10 @@ public class CommandPermission extends ExampleCommand {
                 return;
             }
             if(args[1].equals("add")){
+                if(manager.hasPermission(player1, permission)){
+                    player.sendMessage(getPrefixW() + ChatColor.RED + "你已经为他设置过此权限了!");
+                    return;
+                }
                 manager.addPermission(permission, player1);
                 player.sendMessage(getPrefixW() + ChatColor.GREEN + "成功给" + player1.getName() + "添加" + args[3] + "权限!");
             } else if(args[1].equals("remove")){
