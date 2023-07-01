@@ -6,6 +6,7 @@ import org.bukkit.OfflinePlayer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.alazeprt.APResidence.data;
@@ -70,11 +71,13 @@ public class ResidenceManager {
             return false;
         }
         boolean change = false;
-        for(String string : list){
+        Iterator<String> iterator = list.iterator();
+        while(iterator.hasNext()){
+            String string = iterator.next();
             String[] strings = string.split(";");
             if(strings[0].equals(player.getName())){
                 change = true;
-                list.remove(string);
+                iterator.remove();
             }
         }
         if(!change){
