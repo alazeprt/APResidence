@@ -18,10 +18,10 @@ public class ResidenceEventHandler implements Listener {
         ItemStack item = event.getPlayer().getInventory().getItem(event.getNewSlot());
         if(item != null){
             if(item.getType().equals(Material.GOLDEN_SHOVEL)){
-                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.take_tool"));
+                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.take_tool").replace("&", "§"));
             } else if(item.getType().equals(Material.STICK)){
                 preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
-                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.take_tool"));
+                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.take_tool").replace("&", "§"));
             } else {
                 preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
             }
@@ -49,31 +49,31 @@ public class ResidenceEventHandler implements Listener {
                         if(!preRes.hasLocation1()){
                             // 设置Location1
                             preRes.setLocation1(event.getClickedBlock().getLocation());
-                            event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1"));
+                            event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
                         } else {
                             // 设置Location2 & 创建 & 销毁数据
                             preRes.setLocation2(event.getClickedBlock().getLocation());
                             if(preRes.canCreate()){
                                 preRes.create();
-                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location2"));
+                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location2").replace("&", "§"));
                                 preResidence.remove(preRes);
                             } else {
-                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.has_residence"));
+                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.has_residence").replace("&", "§"));
                             }
                         }
                     } else {
                         // 没有已设置领地, 设置Location1
                         preRes = new PreResidence(event.getPlayer());
                         preRes.setLocation1(event.getClickedBlock().getLocation());
-                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1"));
+                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
                         preResidence.add(preRes);
                     }
                 } else if(item.getType().equals(Material.STICK)){
                     Residence residence = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
                     if(residence == null){
-                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.no_residence"));
+                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.no_residence").replace("&", "§"));
                     } else {
-                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.has_residence"));
+                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.has_residence").replace("&", "§"));
                     }
                 }
             }
