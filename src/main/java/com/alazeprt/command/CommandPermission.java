@@ -29,6 +29,9 @@ public class CommandPermission extends ExampleCommand {
         ResidenceManager manager = new ResidenceManager(residence.getId());
         if(args.length == 2 && args[1].equals("list")){
             Map<String, List<ResidencePermission>> map = manager.listPermission();
+            if(map == null){
+                return;
+            }
             int j = 1;
             for(String playername : map.keySet()){
                 StringBuilder content = new StringBuilder();
