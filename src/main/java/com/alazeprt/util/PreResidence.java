@@ -15,9 +15,9 @@ public class PreResidence {
         if(location1 != null && location2 != null){
             Residence residence = new Residence(location1, location2, player, Residence.getMaxId()+2);
             if(!residence.found()){
-                return true;
-            } else{
                 return false;
+            } else{
+                return true;
             }
         } else {
             return false;
