@@ -5,6 +5,7 @@ import org.bukkit.OfflinePlayer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 import java.util.*;
 
 import static com.alazeprt.APResidence.data;
@@ -120,5 +121,21 @@ public class ResidenceManager {
             }
         }
         return map;
+    }
+
+    public boolean hasPermission(OfflinePlayer player, ResidencePermission permission){
+        List<String> list;
+        if(hasPermissionSetting() && data.getStringList("residence." + id + ".permissions").size() != 0){
+            list = data.getStringList("residence." + id + ".permissions");
+        } else {
+            return false;
+        }
+        for(String string : list){
+            String[] strings = string.split(";");
+            if(strings[0].equals(player.getName()) && strings[1].equals(String.valueOf(permission.getId()))){
+                return true;
+            }
+        }
+        return false;
     }
 }
