@@ -38,6 +38,7 @@ public class ResidenceEventHandler implements Listener {
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
             if(item != null && event.getClickedBlock() != null){
                 if(item.getType().equals(Material.GOLDEN_SHOVEL)){
+                    event.setCancelled(true);
                     boolean hasPreResidence = false;
                     PreResidence preRes = null;
                     for(PreResidence preres : preResidence){
