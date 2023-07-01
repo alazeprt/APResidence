@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import static com.alazeprt.APResidence.*;
 
-public class CommandHelp extends PluginCommand {
+public class CommandHelp extends ExampleCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         player.sendMessage(getPrefixH());

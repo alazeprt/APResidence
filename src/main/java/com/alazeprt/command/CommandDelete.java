@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import static com.alazeprt.APResidence.getPrefixW;
 
-public class CommandDelete extends PluginCommand {
+public class CommandDelete extends ExampleCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         Location location = player.getLocation();

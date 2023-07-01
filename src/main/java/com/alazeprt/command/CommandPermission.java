@@ -3,7 +3,6 @@ package com.alazeprt.command;
 import com.alazeprt.util.Residence;
 import com.alazeprt.util.ResidenceManager;
 import com.alazeprt.util.ResidencePermission;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -13,7 +12,7 @@ import java.util.Objects;
 
 import static com.alazeprt.APResidence.getPrefixW;
 
-public class CommandPermission extends PluginCommand {
+public class CommandPermission extends ExampleCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         Residence residence = Residence.getResidenceByLocation(player.getLocation());
@@ -23,6 +22,7 @@ public class CommandPermission extends PluginCommand {
         }
         if(!Objects.equals(residence.getSavedPlayer(), player.getName())){
             player.sendMessage(getPrefixW() + ChatColor.RED + "你所站的地方不是你的领地!");
+            return;
         }
         OfflinePlayer player1 = Bukkit.getOfflinePlayer(args[2]);
         ResidenceManager manager = new ResidenceManager(residence.getId());
