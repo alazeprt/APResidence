@@ -26,6 +26,10 @@ public class APCommand implements CommandExecutor {
                 } else{
                     sender.sendMessage(getPrefixW() + ChatColor.RED + "错误的指令用法! 请输入/apres查看帮助文档!");
                 }
+            } else if(args.length == 2) {
+                if(args[0].equals("permission") && args[1].equals("list")){
+                    new CommandPermission().executeCommand((Player) sender, args);
+                }
             } else if(args.length == 3){
                 if(args[0].equals("permission") && args[1].equals("remove")){
                     new CommandPermission().executeCommand((Player) sender, args);

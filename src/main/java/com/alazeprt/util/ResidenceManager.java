@@ -5,9 +5,7 @@ import org.bukkit.OfflinePlayer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static com.alazeprt.APResidence.data;
 
@@ -43,11 +41,13 @@ public class ResidenceManager {
             return false;
         }
         boolean change = false;
-        for(String string : list){
+        Iterator<String> iterator = list.iterator();
+        while(iterator.hasNext()){
+            String string = iterator.next();
             String[] strings = string.split(";");
             if(strings[0].equals(player.getName()) && strings[1].equals(String.valueOf(permission.getId()))){
                 change = true;
-                list.remove(string);
+                iterator.remove();
             }
         }
         if(!change){
@@ -101,19 +101,24 @@ public class ResidenceManager {
         }
     }
 
-    public boolean hasPermission(ResidencePermission permission, OfflinePlayer player){
+    public Map<String, List<ResidencePermission>> listPermission(){
         List<String> list;
         if(hasPermissionSetting() && data.getStringList("residence." + id + ".permissions").size() != 0){
             list = data.getStringList("residence." + id + ".permissions");
         } else {
-            return false;
+            return null;
         }
+        Map<String, List<ResidencePermission>> map = new HashMap<>();
         for(String string : list){
             String[] strings = string.split(";");
-            if(strings[0].equals(player.getName()) && strings[1].equals(String.valueOf(permission.getId()))){
-                return true;
+            if(!map.containsKey(strings[0])){
+                List<ResidencePermission> list1 = new ArrayList<>();
+                list1.add(ResidencePermission.getById(Integer.parseInt(strings[1])));
+                map.put(strings[0], list1);
+            } else {
+                map.get(strings[0]).add(ResidencePermission.getById(Integer.parseInt(strings[1])));
             }
         }
-        return false;
+        return map;
     }
 }
