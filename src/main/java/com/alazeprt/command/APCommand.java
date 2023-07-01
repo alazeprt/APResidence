@@ -4,11 +4,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.alazeprt.APResidence.getPrefixW;
 
-public class APCommand implements CommandExecutor {
+public class APCommand implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
@@ -29,6 +33,8 @@ public class APCommand implements CommandExecutor {
             } else if(args.length == 2) {
                 if(args[0].equals("permission") && args[1].equals("list")){
                     new CommandPermission().executeCommand((Player) sender, args);
+                } else if(args[0].equals("permission") && args[1].equals("help")){
+                    new CommandHelp().executeCommand((Player) sender, args);
                 }
             } else if(args.length == 3){
                 if(args[0].equals("permission") && args[1].equals("remove")){
@@ -47,5 +53,38 @@ public class APCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "此指令只能由玩家执行!");
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        List<String> list = new ArrayList<>();
+        if(args.length == 1){
+            list.add("create");
+            list.add("delete");
+            list.add("help");
+            list.add("list");
+            list.add("permission");
+        } else if(args.length == 2){
+            if(args[0].equals("permission")){
+                list.add("add");
+                list.add("help");
+                list.add("list");
+                list.add("remove");
+            }
+        } else if(args.length == 4){
+            if(args[0].equals("permission") && args[1].equals("add") || args[1].equals("remove")){
+                list.add("drop");
+                list.add("egg");
+                list.add("fish");
+                list.add("portal");
+                list.add("interactentity");
+                list.add("interactblock");
+                list.add("interactcontainerblock");
+                list.add("place");
+                list.add("break");
+                list.add("pvp");
+            }
+        }
+        return list;
     }
 }

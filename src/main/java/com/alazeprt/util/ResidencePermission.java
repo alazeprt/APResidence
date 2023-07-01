@@ -36,7 +36,7 @@ public enum ResidencePermission {
 
     public static ResidencePermission getByName(String name) {
         for(ResidencePermission permission : ResidencePermission.values()){
-            if(Objects.equals(permission.name(), name)){
+            if(Objects.equals(permission.name().toLowerCase(), name.toLowerCase())){
                 return permission;
             }
         }
