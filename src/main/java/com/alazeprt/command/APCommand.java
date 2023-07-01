@@ -1,5 +1,6 @@
 package com.alazeprt.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -70,6 +71,10 @@ public class APCommand implements CommandExecutor, TabExecutor {
                 list.add("help");
                 list.add("list");
                 list.add("remove");
+            }
+        } else if(args.length == 3){
+            for(Player player : Bukkit.getOnlinePlayers()){
+                list.add(player.getName());
             }
         } else if(args.length == 4){
             if(args[0].equals("permission") && args[1].equals("add") || args[1].equals("remove")){
