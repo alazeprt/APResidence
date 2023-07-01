@@ -7,19 +7,20 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class CommandList extends ExampleCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         List<Residence> list = Residence.getResidenceList(player);
-        player.sendMessage(getPrefixW() + ChatColor.GREEN + "领地列表(" + list.size() + ", 记录为x, z坐标): ");
+        player.sendMessage(getPrefixW() + message.getString("commands.list.top").replace("&", "§").replace("$num$", String.valueOf(list.size())));
         int i = 1;
         for(Residence residence : list){
             if(residence.getSavedPlayer().equals(player.getName())){
-                String id = ChatColor.GREEN + "领地ID: " + residence.getId();
-                String x = ChatColor.GREEN + "起始位置: " + residence.getLocation().getKey().getBlockX() + ", " + residence.getLocation().getKey().getBlockZ();
-                String z = ChatColor.GREEN + "终止位置: " + residence.getLocation().getValue().getBlockX() + ", " + residence.getLocation().getValue().getBlockZ();
-                player.sendMessage(ChatColor.RED + String.valueOf(i) + ". " + id + ", " + x + ", " + z);
+                String id = message.getString("commands.list.element.id").replace("&", "§").replace("$id$", String.valueOf(residence.getId()));
+                String location1 = message.getString("commands.list.element.location1").replace("&", "§").replace("$x$", String.valueOf(residence.getLocation().getKey().getBlockX())).replace("$z$", String.valueOf(residence.getLocation().getKey().getBlockZ()));
+                String location2 = message.getString("commands.list.element.location2").replace("&", "§").replace("$x$", String.valueOf(residence.getLocation().getValue().getBlockX())).replace("$z$", String.valueOf(residence.getLocation().getValue().getBlockZ()));
+                player.sendMessage(message.getString("commands.list.element.result").replace("&", "§").replace("$order_number$", String.valueOf(i)).replace("$id$", id).replace("$location1$", location1).replace("$location2$", location2));
             }
             i++;
         }

@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class CommandCreate extends ExampleCommand {
     @Override
@@ -18,10 +19,10 @@ public class CommandCreate extends ExampleCommand {
         residence.setLocation1(location1);
         residence.setLocation2(location2);
         if(!residence.canCreate()){
-            player.sendMessage(getPrefixW() + ChatColor.RED + "这里已经有领地了! 你无法再在这里创建领地!");
+            player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_exist").replace("&", "§"));
         } else {
             residence.create();
-            player.sendMessage(getPrefixW() + ChatColor.GREEN + "成功创建领地!");
+            player.sendMessage(getPrefixW() + message.getString("commands.success.create").replace("&", "§"));
         }
     }
 }

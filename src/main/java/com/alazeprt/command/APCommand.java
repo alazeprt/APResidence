@@ -1,21 +1,22 @@
 package com.alazeprt.command;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class APCommand implements CommandExecutor, TabExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if(sender instanceof Player){
             if(args.length == 0){
                 new CommandHelp().executeCommand((Player) sender, args);
@@ -29,35 +30,41 @@ public class APCommand implements CommandExecutor, TabExecutor {
                 } else if(args[0].equals("list")){
                     new CommandList().executeCommand((Player) sender, args);
                 } else{
-                    sender.sendMessage(getPrefixW() + ChatColor.RED + "错误的指令用法! 请输入/apres查看帮助文档!");
+                    sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else if(args.length == 2) {
                 if(args[0].equals("permission") && args[1].equals("list")){
                     new CommandPermission().executeCommand((Player) sender, args);
                 } else if(args[0].equals("permission") && args[1].equals("help")){
                     new CommandHelp().executeCommand((Player) sender, args);
+                } else {
+                    sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else if(args.length == 3){
                 if(args[0].equals("permission") && args[1].equals("remove")){
                     new CommandPermission().executeCommand((Player) sender, args);
+                } else {
+                    sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else if(args.length == 4){
                 if(args[0].equals("permission") && args[1].equals("remove")){
                     new CommandPermission().executeCommand((Player) sender, args);
                 } else if(args[0].equals("permission") && args[1].equals("add")){
                     new CommandPermission().executeCommand((Player) sender, args);
+                } else {
+                    sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else{
-                sender.sendMessage(getPrefixW() + ChatColor.RED + "错误的指令用法! 请输入/apres查看帮助文档!");
+                sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
             }
         } else {
-            sender.sendMessage(ChatColor.RED + "此指令只能由玩家执行!");
+            sender.sendMessage(getPrefixW() + message.getString("commands.exception.only_player").replace("&", "§"));
         }
         return false;
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         List<String> list = new ArrayList<>();
         if(args.length == 1){
             list.add("create");

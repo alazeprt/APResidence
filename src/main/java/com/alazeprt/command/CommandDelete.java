@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class CommandDelete extends ExampleCommand {
     @Override
@@ -13,13 +14,13 @@ public class CommandDelete extends ExampleCommand {
         Location location = player.getLocation();
         Residence residence = Residence.getResidenceByLocation(location);
         if(residence == null){
-            player.sendMessage(getPrefixW() + ChatColor.RED + "此处没有领地!");
+            player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_no_exist").replace("&", "§"));
         } else {
             if(player.getName().equals(residence.getSavedPlayer())){
                 residence.remove();
-                player.sendMessage(getPrefixW() + ChatColor.GREEN + "删除成功!");
+                player.sendMessage(getPrefixW() + message.getString("commands.success.delete").replace("&", "§"));
             } else {
-                player.sendMessage(getPrefixW() + ChatColor.RED + "此领地不属于你! 你无法删除!");
+                player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_no_me").replace("&", "§"));
             }
         }
     }

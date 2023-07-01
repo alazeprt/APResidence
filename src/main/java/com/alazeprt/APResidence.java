@@ -16,6 +16,7 @@ import java.util.List;
 public class APResidence extends JavaPlugin {
     public static List<PreResidence> preResidence = new ArrayList<>();
     public static FileConfiguration data;
+    public static FileConfiguration message;
     public static FileConfiguration config;
     public static Economy econ;
     private boolean setupEconomy() {
@@ -43,8 +44,12 @@ public class APResidence extends JavaPlugin {
         if(!new File(getDataFolder(), "data.yml").exists()){
             saveResource("data.yml", false);
         }
+        if(!new File(getDataFolder(), "message.yml").exists()){
+            saveResource("message.yml", false);
+        }
         config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
         data = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "data.yml"));
+        message = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "message.yml"));
         getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
         getLogger().info("正在注册监听器...");
@@ -57,6 +62,7 @@ public class APResidence extends JavaPlugin {
         getLogger().info("APResidence 插件卸载成功!");
     }
 
+    @Deprecated
     public static String getPrefix(){
         return "§x§0§2§4§3§f§bA§x§0§2§5§6§e§eP§x§0§2§6§9§e§1R§x§0§1§7§b§d§4e§x§0§1§8§e§c§7s§x§0§1§a§1§b§bi§x§0§1§b§4§a§ed§x§0§1§c§7§a§1e§x§0§0§d§9§9§4n§x§0§0§e§c§8§7c§x§0§0§f§f§7§ae";
     }

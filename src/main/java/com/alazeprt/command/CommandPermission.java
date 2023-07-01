@@ -13,17 +13,18 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class CommandPermission extends ExampleCommand {
     @Override
     public void executeCommand(Player player, String[] args) {
         Residence residence = Residence.getResidenceByLocation(player.getLocation());
         if(residence == null){
-            player.sendMessage(getPrefixW() + ChatColor.RED + "你所站的地方没有领地!");
+            player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_no_exist").replace("&", "§"));
             return;
         }
         if(!Objects.equals(residence.getSavedPlayer(), player.getName())){
-            player.sendMessage(getPrefixW() + ChatColor.RED + "你所站的地方不是你的领地!");
+            player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_no_me").replace("&", "§"));
             return;
         }
         ResidenceManager manager = new ResidenceManager(residence.getId());
@@ -51,15 +52,15 @@ public class CommandPermission extends ExampleCommand {
         }
         OfflinePlayer player1 = Bukkit.getOfflinePlayer(args[2]);
         if(Objects.equals(player.getName(), player1.getName())){
-            player.sendMessage(getPrefixW() + ChatColor.RED + "你不能给自己添加权限!");
+            player.sendMessage(getPrefixW() + message.getString("commands.exception.give_me_permission").replace("&", "§"));
             return;
         }
         if(args.length == 3 && args[1].equals("remove")){
             boolean end = manager.removeAllPermission(player1);
             if(!end){
-                player.sendMessage(getPrefixW() + ChatColor.RED + "你还没有设置过他在你领地中的权限!");
+                player.sendMessage(getPrefixW() + message.getString("commands.exception.his_permission_no_exist").replace("&", "§"));
             } else {
-                player.sendMessage(getPrefixW() + ChatColor.GREEN + "成功移除" + player1.getName() + "的所有权限!");
+                player.sendMessage(getPrefixW() + message.getString("commands.success.permission.remove_all").replace("&", "§").replace("$player$", player1.getName()));
             }
         } else if(args.length == 4){
             boolean isNum = true;
@@ -76,22 +77,22 @@ public class CommandPermission extends ExampleCommand {
                 permission = ResidencePermission.getByName(args[3]);
             }
             if(permission == null){
-                player.sendMessage(getPrefixW() + ChatColor.RED + "你填写的领地权限不存在!");
+                player.sendMessage(getPrefixW() + message.getString("commands.exception.permission_no_exist").replace("&", "§"));
                 return;
             }
             if(args[1].equals("add")){
                 if(manager.hasPermission(player1, permission)){
-                    player.sendMessage(getPrefixW() + ChatColor.RED + "你已经为他设置过此权限了!");
+                    player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_exist").replace("&", "§"));
                     return;
                 }
                 manager.addPermission(permission, player1);
-                player.sendMessage(getPrefixW() + ChatColor.GREEN + "成功给" + player1.getName() + "添加" + args[3] + "权限!");
+                player.sendMessage(getPrefixW() + message.getString("commands.success.permission.add").replace("&", "§").replace("$player$", player1.getName()).replace("$permission$", args[3]));
             } else if(args[1].equals("remove")){
                 boolean end = manager.removePermission(permission, player1);
                 if(!end){
-                    player.sendMessage(getPrefixW() + ChatColor.RED + "你还没有设置过他在你领地中的权限!");
+                    player.sendMessage(getPrefixW() + message.getString("commands.exception.his_permission_no_exist").replace("&", "§"));
                 } else {
-                    player.sendMessage(getPrefixW() + ChatColor.GREEN + "成功移除" + player1.getName() + "的" + args[3] + "权限!");
+                    player.sendMessage(getPrefixW() + message.getString("commands.success.permission.remove").replace("&", "§").replace("$player$", player1.getName()).replace("$permission$", args[3]));
                 }
             }
         }

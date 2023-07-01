@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class BuildEventHandler implements Listener {
 
@@ -20,7 +21,7 @@ public class BuildEventHandler implements Listener {
             ResidenceManager manager = new ResidenceManager(res.getId());
             if(!res.getSavedPlayer().equals(event.getPlayer().getName()) && !manager.hasPermission(event.getPlayer(), ResidencePermission.Place)){
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中建造!");
+                event.getPlayer().sendMessage(getPrefixW() + message.getString("events.place.message").replace("&", "§"));
             }
         }
     }
@@ -32,7 +33,7 @@ public class BuildEventHandler implements Listener {
             ResidenceManager manager = new ResidenceManager(res.getId());
             if(!res.getSavedPlayer().equals(event.getPlayer().getName()) && !manager.hasPermission(event.getPlayer(), ResidencePermission.Break)){
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中建造!");
+                event.getPlayer().sendMessage(getPrefixW() + message.getString("events.break.message").replace("&", "§"));
             }
         }
     }

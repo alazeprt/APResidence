@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import static com.alazeprt.APResidence.getPrefixW;
+import static com.alazeprt.APResidence.message;
 
 public class PvPEventHandler implements Listener {
     @EventHandler
@@ -23,20 +24,20 @@ public class PvPEventHandler implements Listener {
                 if (!owner.equals(attacker.getName()) && !owner.equals(victim.getName())) {
                     ResidenceManager manager = new ResidenceManager(residence.getId());
                     if (!manager.hasPermission(attacker, ResidencePermission.PVP) || !manager.hasPermission(victim, ResidencePermission.PVP)) {
-                        attacker.sendMessage(getPrefixW() + ChatColor.RED + "你不能在他人的领地与对方PvP!");
-                        victim.sendMessage(getPrefixW() + ChatColor.RED + "你不能在他人的领地与对方PvP!");
+                        attacker.sendMessage(getPrefixW() + message.getString("events.pvp.message_with_player").replace("&", "§"));
+                        victim.sendMessage(getPrefixW() + message.getString("events.pvp.message_with_player").replace("&", "§"));
                         event.setCancelled(true);
                     }
                 } else if(owner.equals(attacker.getName())){
                     ResidenceManager manager = new ResidenceManager(residence.getId());
                     if (!manager.hasPermission(victim, ResidencePermission.PVP)) {
-                        attacker.sendMessage(getPrefixW() + ChatColor.RED + "你不能在你的领地与对方PvP!");
+                        attacker.sendMessage(getPrefixW() + message.getString("events.pvp.message_with_player").replace("&", "§"));
                         event.setCancelled(true);
                     }
                 } else if(owner.equals(victim.getName())){
                     ResidenceManager manager = new ResidenceManager(residence.getId());
                     if (!manager.hasPermission(attacker, ResidencePermission.PVP)) {
-                        attacker.sendMessage(getPrefixW() + ChatColor.RED + "你不能在对方的领地与对方PvP!");
+                        attacker.sendMessage(getPrefixW() + message.getString("events.pvp.message_with_player").replace("&", "§"));
                         event.setCancelled(true);
                     }
                 }
@@ -50,7 +51,7 @@ public class PvPEventHandler implements Listener {
                 if (!owner.equals(attacker.getName())) {
                     ResidenceManager manager = new ResidenceManager(residence.getId());
                     if (!manager.hasPermission(attacker, ResidencePermission.PVP)) {
-                        attacker.sendMessage(getPrefixW() + ChatColor.RED + "你不能在他人的领地与实体PvP!");
+                        attacker.sendMessage(getPrefixW() + message.getString("events.pvp.message_with_entity").replace("&", "§"));
                         event.setCancelled(true);
                     }
                 }
