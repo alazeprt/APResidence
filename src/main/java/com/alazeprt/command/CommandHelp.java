@@ -13,6 +13,7 @@ public class CommandHelp extends ExampleCommand {
             for(String string : message.getStringList("commands.help.permission")){
                 player.sendMessage(string.replace("&", "§"));
             }
+            return;
         }
         player.sendMessage(getPrefixH());
         for(String string : message.getStringList("commands.help.help")){
