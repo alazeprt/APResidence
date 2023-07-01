@@ -1,6 +1,6 @@
 name: APResidence
 main: com.alazeprt.APResidence
-version: 1.0.3.3-SNAPSHOT
+version: 1.0.4-SNAPSHOT
 api-version: 1.13
 softdepend:
   - Vault

@@ -1,0 +1,79 @@
+commands:
+  exception:
+    wrong_usage: "&c错误的指令用法! 请输入/apres查看帮助文档!"
+    only_player: "&c此指令只能由玩家执行!"
+    residence_exist: "&c这里已经有领地了! 你无法再在这里创建领地!"
+    residence_no_exist: "&c此处没有领地!"
+    residence_no_me: "&c此领地不属于你!"
+    give_me_permission: "&c你不能给自己添加权限!"
+    his_permission_no_exist: "&c你还没有设置过他在你领地中的权限!"
+    permission_no_exist: "&c你填写的领地权限不存在!"
+    permission_exist: "&c你已经为他设置过此权限了!"
+  success:
+    create: "&a成功创建领地!"
+    delete: "&a删除成功!"
+    permission:
+      remove_all: "&a成功移除$player$的所有权限!"
+      add: "&a成功给$player$添加$permission$权限!"
+      remove: "&a成功给$player$移除$permission$权限!"
+  help:
+    help:
+      - "&a/apres help  &7- 查看APResidence帮助文档"
+      - "&a/apres create  &7- 以你所在的位置作中心, 创建一块9x9的领地"
+      - "&a/apres delete  &7- 删除你所在位置的你自己的领地"
+      - "&a/apres list  &7- 查看你创建的领地列表"
+      - "&a/apres permission help  &7- 查看有关领地权限的帮助"
+    permission:
+      - "此帮助为领地权限板块帮助, 其中<>为必填项, []为选填项"
+      - "&a/apres permission add <玩家名> <权限ID/权限名称>&7  - 给予玩家此领地的给定权限"
+      - "&a/apres permission remove <玩家名> [权限ID/权限名称]&7  - 移除玩家此领地的给定权限(若未给定权限, 则移除所有)"
+      - "&a/apres permission list&7  - 查看此领地每位玩家所有的权限"
+  list:
+    top: "&a领地列表($num$, 记录为x, z坐标): "
+    element:
+      id: "&a领地ID: $id$"
+      location1: "&a起始位置: $x$, $z$"
+      location2: "&a终止位置: $x$, $z$"
+      result: "&c$order_number$. $id$, $location1$, $location2$"
+events:
+  drop:
+    description: "&e拥有在领地中丢弃物品的权限"
+    message: "&c你没有权限在他人领地中丢弃物品!"
+  egg:
+    description: "&e拥有在领地中扔鸡蛋的权限"
+    message: "&c你没有权限在他人领地中扔鸡蛋!"
+  fish:
+    description: "&e拥有在领地中钓鱼的权限"
+    message: "&c你没有权限在他人领地中钓鱼!"
+  portal:
+    description: "&e拥有在领地中穿过传送门的权限"
+    message: "&c你没有权限在他人领地中穿过传送门!"
+  interactentity:
+    description: "&e拥有在领地中与实体交互的权限"
+    message: "&c你没有权限在他人领地中与生物交互!"
+  interactblock:
+    description: "&e拥有在领地中与方块交互的权限"
+    message: "&c你没有权限在他人领地上与方块交互!"
+  interactcontainerblock:
+    description: "&e拥有在领地中与容器方块交互的权限"
+    message: "&c你没有权限在他人领地上与容器方块交互!"
+  place:
+    description: "&e拥有在领地中放置方块的权限"
+    message: "&c你没有权限在他人领地中放置方块!"
+  break:
+    description: "&e拥有在领地中破坏方块的权限"
+    message: "&c你没有权限在他人领地中破坏方块!"
+  pvp:
+    description: "&e拥有在领地中PvP的权限"
+    message_with_player: "&c你不能在对方的领地与对方PvP!"
+    message_with_entity: "&c你不能在他人的领地与实体PvP!"
+tool:
+  create_residence:
+    take_tool: "&a你已切换到领地工具, 你可以通过右键两个点创建一块长方形领地!"
+    set_location1: "&a成功设置领地的第一个点! 接着请继续右键第二个点以创建领地, 或切换到其他物品上放弃创建"
+    set_location2: "&a成功创建领地!"  # set_location2 = create_residence(except for throwing others Exception)
+    has_residence: "&c这里已经有领地了! 你无法再在这里创建领地!"
+  check_residence:
+    take_tool: "&a你已切换到领地探测工具, 你可以通过右键某个方块来探测这里是否有领地!"
+    no_residence: "&a这里没有领地!你可以在这里创建领地!"
+    has_residence: "&c这里已经有领地了! 你无法再在这里创建领地!"

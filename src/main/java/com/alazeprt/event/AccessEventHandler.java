@@ -33,7 +33,7 @@ public class AccessEventHandler implements Listener {
             if(!res.getSavedPlayer().equals(event.getPlayer().getName()) && !manager.hasPermission(event.getPlayer(), ResidencePermission.Egg)){
                 event.getEgg().remove();
                 event.setHatching(false);
-                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中丢弃物品!");
+                event.getPlayer().sendMessage(getPrefixW() + ChatColor.RED + "你没有权限在他人领地中扔鸡蛋!");
             }
         }
     }
