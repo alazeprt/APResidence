@@ -4,6 +4,7 @@ import com.alazeprt.command.RegisterCommmand;
 import com.alazeprt.event.RegisterEvent;
 import com.alazeprt.util.PreResidence;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -54,6 +55,11 @@ public class APResidence extends JavaPlugin {
         RegisterCommmand.register(this);
         getLogger().info("正在注册监听器...");
         RegisterEvent.register(this);
+        if(config.getBoolean("bstats")){
+            getLogger().info("正在同步bstats...");
+            int pluginid = 18969;
+            Metrics metrics = new Metrics(this, pluginid);
+        }
         getLogger().info("APResidence 插件加载成功!");
     }
 
