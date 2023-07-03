@@ -45,10 +45,12 @@ public class Residence {
             data.set("residence." + id + ".location1", location1);
             data.set("residence." + id + ".location2", location2);
             data.set("residence." + id + ".player", player.getName());
-            try {
-                data.save(new File(dataFolder, "data.yml"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(config.getString("SaveMode").equals("REAL_TIME")){
+                try {
+                    data.save(new File(dataFolder, "data.yml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             return true;
         }
@@ -111,10 +113,12 @@ public class Residence {
             return false;
         } else {
             data.set("residence." + id, null);
-            try {
-                data.save(new File(dataFolder, "data.yml"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(config.getString("SaveMode").equals("REAL_TIME")){
+                try {
+                    data.save(new File(dataFolder, "data.yml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             return true;
         }
@@ -126,10 +130,12 @@ public class Residence {
 
     public void updateMaxId(int maxid){
         data.set("maxid", maxid);
-        try {
-            data.save(new File(dataFolder, "data.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(config.getString("SaveMode").equals("REAL_TIME")){
+            try {
+                data.save(new File(dataFolder, "data.yml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

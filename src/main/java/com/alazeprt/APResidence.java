@@ -4,13 +4,17 @@ import com.alazeprt.bstats.Metrics;
 import com.alazeprt.command.RegisterCommmand;
 import com.alazeprt.event.RegisterEvent;
 import com.alazeprt.util.PreResidence;
+import com.alazeprt.util.SaveScheduled;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,7 @@ public class APResidence extends JavaPlugin {
     public static FileConfiguration data;
     public static FileConfiguration message;
     public static FileConfiguration config;
+    private final SaveScheduled scheduled = new SaveScheduled(this);
     public static Economy econ;
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -51,6 +56,10 @@ public class APResidence extends JavaPlugin {
         config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
         data = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "data.yml"));
         message = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "message.yml"));
+        if(config.getString("SaveMode").equals("SCHEDULED")){
+            getLogger().info("正在启用定时保存策略...");
+            scheduled.run();
+        }
         getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
         getLogger().info("正在注册监听器...");
@@ -65,6 +74,28 @@ public class APResidence extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if(config.getString("SaveMode").equals("SCHEDULED")){
+            if(!scheduled.saving){
+                getLogger().warning("检测到领地数据正在保存, 将在5秒后再关闭服务器...");
+                BukkitRunnable runnable = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        scheduled.stop();
+                    }
+                };
+                runnable.runTaskLater(this, 100);
+            } else {
+                scheduled.stop();
+            }
+        }
+        if(config.getString("SaveMode").equals("ON_DISABLE")){
+            getLogger().info("正在保存领地数据中...");
+            try {
+                data.save(new File(getDataFolder(), "data.yml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         getLogger().info("APResidence 插件卸载成功!");
     }
 

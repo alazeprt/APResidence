@@ -1,1 +1,38 @@
+# Whether to enable bstats support
+# default: true
 bstats: true
+
+# Tool for selecting residences and creating them
+# default:golden_shovel
+SelectionTool: "golden_shovel"
+
+# A tool used to detect whether there is a residence here
+# default: stick
+DetectionTool: "stick"
+
+# The World of Disabling APResidence Plugin
+DisabledWorld:
+  # World list of disabled plugins (world names)
+  # default: []
+  worlds: []
+
+# How to save residential information? The methods include:
+# - REAL_TIME: When there are any modifications to the residential information, it will be immediately saved
+# - SCHEDULED: Save every other period of time (default)
+# - ON_DISABLE: Saving residential information during plugin uninstallation
+SaveMode: "SCHEDULED"
+
+# If SaveMode is SCHEDULED, the following items need to be set
+# Set the interval for saving residential data (Unit: minutes)
+# default: 10
+SaveInterval: 10
+
+# About Automatically Cleaning Offline Players' Residences
+AutoCleanUp:
+  # Do you want to enable this function
+  # default: false
+  enable: false
+
+  # After the player has been offline for a continuous period of time since creating this residence, delete this residence (Unit: days)
+  # default: 60
+  time: 60

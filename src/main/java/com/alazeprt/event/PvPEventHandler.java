@@ -9,12 +9,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import static com.alazeprt.APResidence.getPrefixW;
-import static com.alazeprt.APResidence.message;
+import static com.alazeprt.APResidence.*;
 
 public class PvPEventHandler implements Listener {
     @EventHandler
     public void onEntityAttackEntity(EntityDamageByEntityEvent event) {
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getDamager().getWorld().getName()) || config.getStringList("DisabledWorld.worlds").contains(event.getEntity().getWorld().getName())){
+            event.getDamager().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            event.getEntity().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         if (event.getDamager() instanceof Player attacker && event.getEntity() instanceof Player victim) {
             Residence attackerResidence = Residence.getResidenceByLocation(attacker.getLocation());
             Residence victimResidence = Residence.getResidenceByLocation(victim.getLocation());

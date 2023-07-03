@@ -9,6 +9,7 @@ commands:
     his_permission_no_exist: "&cYou haven't set his permissions in your residence yet!"
     permission_no_exist: "&cThe residential permission you filled in does not exist!"
     permission_exist: "&cYou have already set this permission for him!"
+    in_disable_world: "&cYou are in the world of uninstalling the APResidence plugin! The command of APResidence plugin will not be available!"
   success:
     create: "&aSuccessfully created residence!"
     delete: "&aSuccessfully deleted!"
@@ -71,6 +72,7 @@ events:
     description: "&ePossess PvP permission in residence"
     message_with_player: "&cYou cannot have PvP with the other party at their residence!"
     message_with_entity: "&cYou cannot interact with entity PvP in someone else's residence!"
+  in_disable_world: "&cYou are in the world of uninstalling the APResidence plugin! Unable to use the APResidence plugin's listener!"
 tool:
   create_residence:
     take_tool: "&aYou have switched to the Residence tool, you can create a rectangular residence by right-clicking two points!"
@@ -93,6 +95,7 @@ tool:
 #    his_permission_no_exist: "&c你还没有设置过他在你领地中的权限!"
 #    permission_no_exist: "&c你填写的领地权限不存在!"
 #    permission_exist: "&c你已经为他设置过此权限了!"
+#    in_disable_world: "&c你在卸载了APResidence插件的世界内！将无法使用APResidence插件的命令！"
 #  success:
 #    create: "&a成功创建领地!"
 #    delete: "&a删除成功!"
@@ -155,6 +158,7 @@ tool:
 #    description: "&e拥有在领地中PvP的权限"
 #    message_with_player: "&c你不能在对方的领地与对方PvP!"
 #    message_with_entity: "&c你不能在他人的领地与实体PvP!"
+#  in_disable_world: "&c你在卸载了APResidence插件的世界内!将无法使用APResidence插件的监听器!"
 #tool:
 #  create_residence:
 #    take_tool: "&a你已切换到领地工具, 你可以通过右键两个点创建一块长方形领地!"

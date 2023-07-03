@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.*;
 
+import static com.alazeprt.APResidence.config;
 import static com.alazeprt.APResidence.data;
 
 public class ResidenceManager {
@@ -27,10 +28,12 @@ public class ResidenceManager {
         String str = player.getName() + ";" + permission.getId();
         list.add(str);
         data.set("residence." + id + ".permissions", list);
-        try {
-            data.save(new File(DataFolder, "data.yml"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(config.getString("SaveMode").equals("REAL_TIME")){
+            try {
+                data.save(new File(DataFolder, "data.yml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -55,10 +58,12 @@ public class ResidenceManager {
             return false;
         } else {
             data.set("residence." + id + ".permissions", list);
-            try {
-                data.save(new File(DataFolder, "data.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(config.getString("SaveMode").equals("REAL_TIME")){
+                try {
+                    data.save(new File(DataFolder, "data.yml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             return true;
         }
@@ -85,10 +90,12 @@ public class ResidenceManager {
             return false;
         } else {
             data.set("residence." + id + ".permissions", list);
-            try {
-                data.save(new File(DataFolder, "data.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(config.getString("SaveMode").equals("REAL_TIME")){
+                try {
+                    data.save(new File(DataFolder, "data.yml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             return true;
         }

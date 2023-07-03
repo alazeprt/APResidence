@@ -11,13 +11,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.alazeprt.APResidence.getPrefixW;
-import static com.alazeprt.APResidence.message;
+import static com.alazeprt.APResidence.*;
 
 public class APCommand implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if(sender instanceof Player){
+            if(config.getStringList("DisabledWorld.worlds").contains(((Player) sender).getWorld().getName())){
+                sender.sendMessage(getPrefixW() + message.getString("commands.exception.in_disable_world"));
+                return false;
+            }
             if(args.length == 0){
                 new CommandHelp().executeCommand((Player) sender, args);
             } else if(args.length == 1){

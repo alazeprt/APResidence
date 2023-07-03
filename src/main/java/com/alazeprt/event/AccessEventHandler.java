@@ -10,12 +10,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
-import static com.alazeprt.APResidence.getPrefixW;
-import static com.alazeprt.APResidence.message;
+import static com.alazeprt.APResidence.*;
 
 public class AccessEventHandler implements Listener {
     @EventHandler
     public void onPlayerDrop(PlayerDropItemEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getItemDrop().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
@@ -28,6 +31,10 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerEgg(PlayerEggThrowEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getEgg().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
@@ -41,6 +48,10 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerFish(PlayerFishEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getHook().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
@@ -53,6 +64,10 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerPortal(PlayerPortalEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getPlayer().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
@@ -65,6 +80,10 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getRightClicked().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
@@ -77,6 +96,10 @@ public class AccessEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         if(event.getClickedBlock() != null) {
             Residence res = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
             if(res != null){

@@ -15,15 +15,25 @@ import static com.alazeprt.APResidence.*;
 public class ResidenceEventHandler implements Listener {
     @EventHandler
     public void onPlayerTake(PlayerItemHeldEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         ItemStack item = event.getPlayer().getInventory().getItem(event.getNewSlot());
         if(item != null){
-            if(item.getType().equals(Material.GOLDEN_SHOVEL)){
-                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.take_tool").replace("&", "§"));
-            } else if(item.getType().equals(Material.STICK)){
-                preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
-                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.take_tool").replace("&", "§"));
+            Material selectionTool = Material.getMaterial(config.getString("SelectionTool").toUpperCase());
+            Material DetectionTool = Material.getMaterial(config.getString("DetectionTool").toUpperCase());
+            if(selectionTool == null || DetectionTool == null){
+                throw new RuntimeException("Unknown Material \"" + config.getString("SelectionTool") + "\"!");
             } else {
-                preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
+                if(item.getType().equals(selectionTool)){
+                    event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.take_tool").replace("&", "§"));
+                } else if(item.getType().equals(Material.STICK)){
+                    preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
+                    event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.take_tool").replace("&", "§"));
+                } else {
+                    preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
+                }
             }
         } else {
             preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
@@ -32,48 +42,58 @@ public class ResidenceEventHandler implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         ItemStack item = event.getItem();
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
             if(item != null && event.getClickedBlock() != null){
-                if(item.getType().equals(Material.GOLDEN_SHOVEL)){
-                    event.setCancelled(true);
-                    boolean hasPreResidence = false;
-                    PreResidence preRes = null;
-                    for(PreResidence preres : preResidence){
-                        if(preres.getPlayer().equals(event.getPlayer())){
-                            hasPreResidence = true;
-                            preRes = preres;
-                        }
-                    }
-                    if(hasPreResidence){
-                        if(!preRes.hasLocation1()){
-                            // 设置Location1
-                            preRes.setLocation1(event.getClickedBlock().getLocation());
-                            event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
-                        } else {
-                            // 设置Location2 & 创建 & 销毁数据
-                            preRes.setLocation2(event.getClickedBlock().getLocation());
-                            if(preRes.canCreate()){
-                                preRes.create();
-                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location2").replace("&", "§"));
-                                preResidence.remove(preRes);
-                            } else {
-                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.has_residence").replace("&", "§"));
+                Material selectionTool = Material.getMaterial(config.getString("SelectionTool").toUpperCase());
+                Material DetectionTool = Material.getMaterial(config.getString("DetectionTool").toUpperCase());
+                if(selectionTool == null || DetectionTool == null){
+                    throw new RuntimeException("Unknown Material \"" + config.getString("SelectionTool") + "\"!");
+                } else {
+                    if(item.getType().equals(selectionTool)){
+                        event.setCancelled(true);
+                        boolean hasPreResidence = false;
+                        PreResidence preRes = null;
+                        for(PreResidence preres : preResidence){
+                            if(preres.getPlayer().equals(event.getPlayer())){
+                                hasPreResidence = true;
+                                preRes = preres;
                             }
                         }
-                    } else {
-                        // 没有已设置领地, 设置Location1
-                        preRes = new PreResidence(event.getPlayer());
-                        preRes.setLocation1(event.getClickedBlock().getLocation());
-                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
-                        preResidence.add(preRes);
-                    }
-                } else if(item.getType().equals(Material.STICK)){
-                    Residence residence = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
-                    if(residence == null){
-                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.no_residence").replace("&", "§"));
-                    } else {
-                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.has_residence").replace("&", "§"));
+                        if(hasPreResidence){
+                            if(!preRes.hasLocation1()){
+                                // 设置Location1
+                                preRes.setLocation1(event.getClickedBlock().getLocation());
+                                event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
+                            } else {
+                                // 设置Location2 & 创建 & 销毁数据
+                                preRes.setLocation2(event.getClickedBlock().getLocation());
+                                if(preRes.canCreate()){
+                                    preRes.create();
+                                    event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location2").replace("&", "§"));
+                                    preResidence.remove(preRes);
+                                } else {
+                                    event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.has_residence").replace("&", "§"));
+                                }
+                            }
+                        } else {
+                            // 没有已设置领地, 设置Location1
+                            preRes = new PreResidence(event.getPlayer());
+                            preRes.setLocation1(event.getClickedBlock().getLocation());
+                            event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
+                            preResidence.add(preRes);
+                        }
+                    } else if(item.getType().equals(DetectionTool)){
+                        Residence residence = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
+                        if(residence == null){
+                            event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.no_residence").replace("&", "§"));
+                        } else {
+                            event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.has_residence").replace("&", "§"));
+                        }
                     }
                 }
             }

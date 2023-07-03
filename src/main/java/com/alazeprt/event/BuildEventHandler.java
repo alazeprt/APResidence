@@ -9,13 +9,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import static com.alazeprt.APResidence.getPrefixW;
-import static com.alazeprt.APResidence.message;
+import static com.alazeprt.APResidence.*;
 
 public class BuildEventHandler implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getBlock().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
@@ -28,6 +31,10 @@ public class BuildEventHandler implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event){
+        if(config.getStringList("DisabledWorld.worlds").contains(event.getPlayer().getWorld().getName())){
+            event.getPlayer().sendMessage(getPrefixW() + message.getString("events.in_disable_world"));
+            return;
+        }
         Residence res = Residence.getResidenceByLocation(event.getBlock().getLocation());
         if(res != null){
             ResidenceManager manager = new ResidenceManager(res.getId());
