@@ -31,20 +31,24 @@ public class CommandPermission extends ExampleCommand {
         if(args.length == 2 && args[1].equals("list")){
             Map<String, List<ResidencePermission>> map = manager.listPermission();
             if(map == null){
+                player.sendMessage(getPrefixW() + message.getString("commands.permission.list.top").replace("&", "§").replace("$num$", "0"));
                 return;
             }
+            player.sendMessage(getPrefixW() + message.getString("commands.permission.list.top").replace("&", "§").replace("$num$", String.valueOf(map.size())));
             int j = 1;
             for(String playername : map.keySet()){
                 StringBuilder content = new StringBuilder();
-                content.append(getPrefixW()).append(ChatColor.GREEN).append(j).append(". ").append(playername).append(": ").append(ChatColor.YELLOW);
+                content.append(getPrefixW()).append(message.getString("commands.permission.list.element").replace("&", "§").replace("$index$", String.valueOf(j).replace("$player$", playername)));
+                StringBuilder list = new StringBuilder();
                 for(int i = 0;i<map.get(playername).size();i++){
                     ResidencePermission permission = map.get(playername).get(i);
                     if(i != map.get(playername).size()-1){
-                        content.append(permission.name()).append(", ");
+                        list.append(permission.name()).append(", ");
                     } else {
-                        content.append(permission.name());
+                        list.append(permission.name());
                     }
                 }
+                content = new StringBuilder(content.toString().replace("$permission_list$", list));
                 player.sendMessage(content.toString());
                 j++;
             }

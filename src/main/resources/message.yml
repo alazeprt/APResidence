@@ -16,6 +16,10 @@ commands:
       remove_all: "&a成功移除$player$的所有权限!"
       add: "&a成功给$player$添加$permission$权限!"
       remove: "&a成功给$player$移除$permission$权限!"
+  permission:
+    list:
+      top: "&a领地权限列表($num$)"
+      element: "&a$index$. $player$: &e$permission_list$"
   help:
     help:
       - "&a/apres help  &7- 查看APResidence帮助文档"
