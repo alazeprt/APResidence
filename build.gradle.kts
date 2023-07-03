@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.alazeprt"
-version = "1.0.4"
+version = "1.0.5-SNAPSHOT"
 
 repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
