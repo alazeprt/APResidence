@@ -26,13 +26,3 @@ SaveMode: "SCHEDULED"
 # Set the interval for saving residential data (Unit: minutes)
 # default: 10
 SaveInterval: 10
-
-# About Automatically Cleaning Offline Players' Residences
-AutoCleanUp:
-  # Do you want to enable this function
-  # default: false
-  enable: false
-
-  # After the player has been offline for a continuous period of time since creating this residence, delete this residence (Unit: days)
-  # default: 60
-  time: 60
