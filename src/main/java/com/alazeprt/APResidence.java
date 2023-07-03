@@ -5,7 +5,6 @@ import com.alazeprt.command.RegisterCommmand;
 import com.alazeprt.event.RegisterEvent;
 import com.alazeprt.util.PreResidence;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -14,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 public class APResidence extends JavaPlugin {
     public static List<PreResidence> preResidence = new ArrayList<>();
