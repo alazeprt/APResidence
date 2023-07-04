@@ -68,6 +68,7 @@ public class APCommand implements CommandExecutor, TabExecutor {
                 if(sender.hasPermission("apresidence.command.reload") && args[0].equals("reload")){
                     APResidence.reload();
                     sender.sendMessage(getPrefixW() + message.getString("commands.success.reload").replace("&", "§"));
+                    return false;
                 }
             }
             sender.sendMessage(getPrefixW() + message.getString("commands.exception.only_player").replace("&", "§"));

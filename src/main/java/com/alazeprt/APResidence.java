@@ -24,7 +24,7 @@ public class APResidence extends JavaPlugin {
     public static FileConfiguration data;
     public static FileConfiguration message;
     public static FileConfiguration config;
-    private static final SaveScheduled scheduled = new SaveScheduled(APResidence.getProvidingPlugin(APResidence.class));
+    private static final SaveScheduled scheduled = new SaveScheduled();
     public static Economy econ;
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -155,12 +155,27 @@ public class APResidence extends JavaPlugin {
         if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml").exists()){
             APResidence.getProvidingPlugin(APResidence.class).saveResource("data.yml", false);
         }
-        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml").exists()){
-            APResidence.getProvidingPlugin(APResidence.class).saveResource("message.yml", false);
-        }
         config = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
         data = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
-        message = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml"));
+        String lang = config.getString("lang");
+        File file = new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder().getPath() + "/lang", lang + ".yml");
+        if(!file.exists()){
+            if(lang.equals("en_US")){
+                APResidence.getProvidingPlugin(APResidence.class).saveResource("lang/en_US.yml", false);
+            } else if(lang.equals("zh_CN")){
+                APResidence.getProvidingPlugin(APResidence.class).saveResource("lang/zh_CN.yml", false);
+            } else {
+                config.set("lang", "en_US");
+                try {
+                    config.save(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                file = new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder().getPath() + "/lang", "en_US.yml");
+                APResidence.getProvidingPlugin(APResidence.class).saveResource("lang/en_US.yml", false);
+            }
+        }
+        message = YamlConfiguration.loadConfiguration(file);
         if(config.getString("SaveMode").equals("SCHEDULED")){
             APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在启用定时保存策略...");
             scheduled.run();
