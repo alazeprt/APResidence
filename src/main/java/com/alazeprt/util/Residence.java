@@ -108,6 +108,16 @@ public class Residence {
         return null;
     }
 
+    public static Residence getResidenceByID(int id, OfflinePlayer player){
+        List<Residence> residences = getResidenceList();
+        for(Residence res : residences){
+            if(res.getSavedPlayer().equals(player.getName()) && res.getId().equals(id)){
+                return res;
+            }
+        }
+        return null;
+    }
+
     public boolean remove(){
         if(!exist()){
             return false;

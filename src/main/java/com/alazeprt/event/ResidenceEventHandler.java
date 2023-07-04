@@ -26,9 +26,9 @@ public class ResidenceEventHandler implements Listener {
             if(selectionTool == null || DetectionTool == null){
                 throw new RuntimeException("Unknown Material \"" + config.getString("SelectionTool") + "\"!");
             } else {
-                if(item.getType().equals(selectionTool)){
+                if(event.getPlayer().hasPermission("apresidence.tool.create") && item.getType().equals(selectionTool)){
                     event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.take_tool").replace("&", "§"));
-                } else if(item.getType().equals(Material.STICK)){
+                } else if(event.getPlayer().hasPermission("apresidence.tool.detect") && item.getType().equals(Material.STICK)){
                     preResidence.removeIf(preres -> preres.getPlayer().equals(event.getPlayer()));
                     event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.take_tool").replace("&", "§"));
                 } else {
@@ -54,7 +54,7 @@ public class ResidenceEventHandler implements Listener {
                 if(selectionTool == null || DetectionTool == null){
                     throw new RuntimeException("Unknown Material \"" + config.getString("SelectionTool") + "\"!");
                 } else {
-                    if(item.getType().equals(selectionTool)){
+                    if(event.getPlayer().hasPermission("apresidence.tool.create") && item.getType().equals(selectionTool)){
                         event.setCancelled(true);
                         boolean hasPreResidence = false;
                         PreResidence preRes = null;
@@ -78,6 +78,7 @@ public class ResidenceEventHandler implements Listener {
                                     preResidence.remove(preRes);
                                 } else {
                                     event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.has_residence").replace("&", "§"));
+                                    preResidence.remove(preRes);
                                 }
                             }
                         } else {
@@ -87,7 +88,7 @@ public class ResidenceEventHandler implements Listener {
                             event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location1").replace("&", "§"));
                             preResidence.add(preRes);
                         }
-                    } else if(item.getType().equals(DetectionTool)){
+                    } else if(event.getPlayer().hasPermission("apresidence.tool.detect") && item.getType().equals(DetectionTool)){
                         Residence residence = Residence.getResidenceByLocation(event.getClickedBlock().getLocation());
                         if(residence == null){
                             event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.check_residence.no_residence").replace("&", "§"));

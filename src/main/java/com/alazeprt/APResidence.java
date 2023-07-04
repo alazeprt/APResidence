@@ -17,13 +17,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class APResidence extends JavaPlugin {
     public static List<PreResidence> preResidence = new ArrayList<>();
     public static FileConfiguration data;
     public static FileConfiguration message;
     public static FileConfiguration config;
-    private final SaveScheduled scheduled = new SaveScheduled(this);
+    private static final SaveScheduled scheduled = new SaveScheduled(APResidence.getProvidingPlugin(APResidence.class));
     public static Economy econ;
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -38,65 +39,66 @@ public class APResidence extends JavaPlugin {
     }
     @Override
     public void onEnable() {
-        getLogger().info("正在启用APResidence插件...");
-        getLogger().info("正在初始化经济系统...");
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在启用APResidence插件...");
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在初始化经济系统...");
         if(!setupEconomy()){
-            getLogger().warning("Vault 未初始化! 将无法使用经济功能!");
+            APResidence.getProvidingPlugin(APResidence.class).getLogger().warning("Vault 未初始化! 将无法使用经济功能!");
         }
-        getLogger().info("正在初始化配置文件...");
-        if(!new File(getDataFolder(), "config.yml").exists()){
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在初始化配置文件...");
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml").exists()){
             saveResource("config.yml", false);
         }
-        if(!new File(getDataFolder(), "data.yml").exists()){
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml").exists()){
             saveResource("data.yml", false);
         }
-        if(!new File(getDataFolder(), "message.yml").exists()){
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml").exists()){
             saveResource("message.yml", false);
         }
-        config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
-        data = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "data.yml"));
-        message = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "message.yml"));
+        config = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
+        data = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
+        message = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml"));
         if(config.getString("SaveMode").equals("SCHEDULED")){
-            getLogger().info("正在启用定时保存策略...");
+            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在启用定时保存策略...");
             scheduled.run();
         }
-        getLogger().info("正在注册指令...");
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
-        getLogger().info("正在注册监听器...");
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在注册监听器...");
         RegisterEvent.register(this);
         if(config.getBoolean("bstats")){
-            getLogger().info("正在同步bstats...");
+            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在同步bstats...");
             int pluginid = 18969;
             Metrics metrics = new Metrics(this, pluginid);
         }
-        getLogger().info("APResidence 插件加载成功!");
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("APResidence 插件加载成功!");
     }
 
     @Override
     public void onDisable() {
         if(config.getString("SaveMode").equals("SCHEDULED")){
-            if(!scheduled.saving){
-                getLogger().warning("检测到领地数据正在保存, 将在5秒后再关闭服务器...");
-                BukkitRunnable runnable = new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        scheduled.stop();
-                    }
-                };
-                runnable.runTaskLater(this, 100);
+            if(!SaveScheduled.saving){
+                APResidence.getProvidingPlugin(APResidence.class).getLogger().info("检测到领地数据正在保存, 将在2秒后再关闭服务器...");
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    APResidence.getProvidingPlugin(APResidence.class).getLogger().warning("无法启用2秒后关闭进程, 将直接终止保存!");
+                    scheduled.stop();
+                    return;
+                }
+                scheduled.stop();
             } else {
                 scheduled.stop();
             }
         }
         if(config.getString("SaveMode").equals("ON_DISABLE")){
-            getLogger().info("正在保存领地数据中...");
+            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在保存领地数据中...");
             try {
-                data.save(new File(getDataFolder(), "data.yml"));
+                data.save(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        getLogger().info("APResidence 插件卸载成功!");
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("APResidence 插件卸载成功!");
     }
 
     @Deprecated
@@ -110,5 +112,49 @@ public class APResidence extends JavaPlugin {
 
     public static String getPrefixH(){
         return message.getString("commands.help.top").replace("&", "§");
+    }
+
+    public static void reload(){
+        // Disable
+        if(config.getString("SaveMode").equals("SCHEDULED")){
+            if(!scheduled.saving){
+                APResidence.getProvidingPlugin(APResidence.class).getLogger().warning("检测到领地数据正在保存, 将在5秒后再关闭服务器...");
+                BukkitRunnable runnable = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        scheduled.stop();
+                    }
+                };
+                runnable.runTaskLater(APResidence.getProvidingPlugin(APResidence.class), 100);
+            } else {
+                scheduled.stop();
+            }
+        }
+        if(config.getString("SaveMode").equals("ON_DISABLE")){
+            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在保存领地数据中...");
+            try {
+                data.save(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        // Enable
+        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在初始化配置文件...");
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml").exists()){
+            APResidence.getProvidingPlugin(APResidence.class).saveResource("config.yml", false);
+        }
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml").exists()){
+            APResidence.getProvidingPlugin(APResidence.class).saveResource("data.yml", false);
+        }
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml").exists()){
+            APResidence.getProvidingPlugin(APResidence.class).saveResource("message.yml", false);
+        }
+        config = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
+        data = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
+        message = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml"));
+        if(config.getString("SaveMode").equals("SCHEDULED")){
+            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在启用定时保存策略...");
+            scheduled.run();
+        }
     }
 }

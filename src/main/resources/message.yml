@@ -10,6 +10,7 @@ commands:
     permission_no_exist: "&cThe residential permission you filled in does not exist!"
     permission_exist: "&cYou have already set this permission for him!"
     in_disable_world: "&cYou are in the world of uninstalling the APResidence plugin! The command of APResidence plugin will not be available!"
+    delete_exception: "&cUnknown residence ID or residence does not belong to you!"
   success:
     create: "&aSuccessfully created residence!"
     delete: "&aSuccessfully deleted!"
@@ -17,6 +18,7 @@ commands:
       remove_all: "&aSuccessfully removed all permissions for $player$!"
       add: "&aSuccessfully added $permission$ to $player$!"
       remove: "&aSuccessfully removed $permission$ for $player$!"
+    reload: "&aSuccessfully reloaded!"
   permission:
     list:
       top: "&aResidential permission list($num$)"
@@ -97,6 +99,7 @@ tool:
 #    permission_no_exist: "&c你填写的领地权限不存在!"
 #    permission_exist: "&c你已经为他设置过此权限了!"
 #    in_disable_world: "&c你在卸载了APResidence插件的世界内！将无法使用APResidence插件的命令！"
+#    delete_exception: "&c未知的领地ID或领地不属于你!"
 #  success:
 #    create: "&a成功创建领地!"
 #    delete: "&a删除成功!"
@@ -104,6 +107,7 @@ tool:
 #      remove_all: "&a成功移除$player$的所有权限!"
 #      add: "&a成功给$player$添加$permission$权限!"
 #      remove: "&a成功给$player$移除$permission$权限!"
+#    reload: "&a成功重载!"
 #  permission:
 #    list:
 #      top: "&a领地权限列表($num$)"

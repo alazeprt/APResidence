@@ -1,5 +1,6 @@
 package com.alazeprt.command;
 
+import com.alazeprt.APResidence;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,35 +25,37 @@ public class APCommand implements CommandExecutor, TabExecutor {
             if(args.length == 0){
                 new CommandHelp().executeCommand((Player) sender, args);
             } else if(args.length == 1){
-                if(args[0].equals("help")){
+                if(sender.hasPermission("apresidence.command.help") && args[0].equals("help")){
                     new CommandHelp().executeCommand((Player) sender, args);
-                } else if(args[0].equals("create")){
+                } else if(sender.hasPermission("apresidence.command.create") && args[0].equals("create")){
                     new CommandCreate().executeCommand((Player) sender, args);
-                } else if(args[0].equals("delete")){
+                } else if(sender.hasPermission("apresidence.command.delete") && args[0].equals("delete")){
                     new CommandDelete().executeCommand((Player) sender, args);
-                } else if(args[0].equals("list")){
+                } else if(sender.hasPermission("apresidence.command.list") && args[0].equals("list")){
                     new CommandList().executeCommand((Player) sender, args);
                 } else{
                     sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else if(args.length == 2) {
-                if(args[0].equals("permission") && args[1].equals("list")){
+                if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("list")){
                     new CommandPermission().executeCommand((Player) sender, args);
-                } else if(args[0].equals("permission") && args[1].equals("help")){
+                } else if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("help")){
                     new CommandHelp().executeCommand((Player) sender, args);
+                } else if(sender.hasPermission("apresidence.command.delete") && args[0].equals("delete")){
+                    new CommandDelete().executeCommand((Player) sender, args);
                 } else {
                     sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else if(args.length == 3){
-                if(args[0].equals("permission") && args[1].equals("remove")){
+                if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("remove")){
                     new CommandPermission().executeCommand((Player) sender, args);
                 } else {
                     sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
                 }
             } else if(args.length == 4){
-                if(args[0].equals("permission") && args[1].equals("remove")){
+                if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("remove")){
                     new CommandPermission().executeCommand((Player) sender, args);
-                } else if(args[0].equals("permission") && args[1].equals("add")){
+                } else if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("add")){
                     new CommandPermission().executeCommand((Player) sender, args);
                 } else {
                     sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
@@ -61,6 +64,12 @@ public class APCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage(getPrefixW() + message.getString("commands.exception.wrong_usage").replace("&", "§"));
             }
         } else {
+            if(args.length == 1){
+                if(sender.hasPermission("apresidence.command.reload") && args[0].equals("reload")){
+                    APResidence.reload();
+                    sender.sendMessage(getPrefixW() + message.getString("commands.success.reload").replace("&", "§"));
+                }
+            }
             sender.sendMessage(getPrefixW() + message.getString("commands.exception.only_player").replace("&", "§"));
         }
         return false;
