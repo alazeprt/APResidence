@@ -22,6 +22,7 @@ commands:
       top: "&aResidential permission list($num$)"
       element: "&a$index$. $player$: &e$permission_list$"
   help:
+    top: "&a&lAPResidence Help Document"
     help:
       - "&a/apres help  &7- View APResidence Help Document"
       - "&a/apres create  &7- Create a 9x9 residential area centered around your location"
@@ -108,6 +109,7 @@ tool:
 #      top: "&a领地权限列表($num$)"
 #      element: "&a$index$. $player$: &e$permission_list$"
 #  help:
+#    top: "&a&lAPResidence帮助文档"
 #    help:
 #      - "&a/apres help  &7- 查看APResidence帮助文档"
 #      - "&a/apres create  &7- 以你所在的位置作中心, 创建一块9x9的领地"

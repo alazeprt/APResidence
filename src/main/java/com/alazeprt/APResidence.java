@@ -109,6 +109,6 @@ public class APResidence extends JavaPlugin {
     }
 
     public static String getPrefixH(){
-        return "§x§0§2§4§3§f§bA§x§0§2§5§0§f§2P§x§0§2§5§e§e§9R§x§0§2§6§b§d§fe§x§0§1§7§9§d§6s§x§0§1§8§6§c§di§x§0§1§9§4§c§4d§x§0§1§a§1§b§be§x§0§1§a§e§b§1n§x§0§1§b§c§a§8c§x§0§1§c§9§9§fe §x§0§0§d§7§9§6帮§x§0§0§e§4§8§c助§x§0§0§f§2§8§3文§x§0§0§f§f§7§a档";
+        return message.getString("commands.help.top").replace("&", "§");
     }
 }
