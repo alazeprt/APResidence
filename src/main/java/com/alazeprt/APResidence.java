@@ -39,49 +39,58 @@ public class APResidence extends JavaPlugin {
     }
     @Override
     public void onEnable() {
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在启用APResidence插件...");
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在初始化经济系统...");
+        getLogger().info("正在启用APResidence插件...");
+        getLogger().info("正在初始化经济系统...");
         if(!setupEconomy()){
-            APResidence.getProvidingPlugin(APResidence.class).getLogger().warning("Vault 未初始化! 将无法使用经济功能!");
+            getLogger().warning("Vault 未初始化! 将无法使用经济功能!");
         }
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在初始化配置文件...");
+        getLogger().info("正在初始化配置文件...");
         if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml").exists()){
             saveResource("config.yml", false);
         }
         if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml").exists()){
             saveResource("data.yml", false);
         }
-        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml").exists()){
-            saveResource("message.yml", false);
-        }
         config = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
         data = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
-        message = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "message.yml"));
+        String lang = config.getString("lang");
+        File file = new File(getDataFolder().getPath() + "/lang", lang + ".yml");
+        if(!file.exists()){
+            if(lang.equals("en_US")){
+                saveResource("lang/en_US.yml", false);
+            } else if(lang.equals("zh_CN")){
+                saveResource("lang/zh_CN.yml", false);
+            } else {
+                config.set("lang", "en_US");
+                saveResource("lang/en_US.yml", false);
+            }
+        }
+        message = YamlConfiguration.loadConfiguration(file);
         if(config.getString("SaveMode").equals("SCHEDULED")){
-            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在启用定时保存策略...");
+            getLogger().info("正在启用定时保存策略...");
             scheduled.run();
         }
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在注册指令...");
+        getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在注册监听器...");
+        getLogger().info("正在注册监听器...");
         RegisterEvent.register(this);
         if(config.getBoolean("bstats")){
-            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在同步bstats...");
+            getLogger().info("正在同步bstats...");
             int pluginid = 18969;
             Metrics metrics = new Metrics(this, pluginid);
         }
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("APResidence 插件加载成功!");
+        getLogger().info("APResidence 插件加载成功!");
     }
 
     @Override
     public void onDisable() {
         if(config.getString("SaveMode").equals("SCHEDULED")){
             if(!SaveScheduled.saving){
-                APResidence.getProvidingPlugin(APResidence.class).getLogger().info("检测到领地数据正在保存, 将在2秒后再关闭服务器...");
+                getLogger().info("检测到领地数据正在保存, 将在2秒后再关闭服务器...");
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
-                    APResidence.getProvidingPlugin(APResidence.class).getLogger().warning("无法启用2秒后关闭进程, 将直接终止保存!");
+                    getLogger().warning("无法启用2秒后关闭进程, 将直接终止保存!");
                     scheduled.stop();
                     return;
                 }
@@ -91,14 +100,14 @@ public class APResidence extends JavaPlugin {
             }
         }
         if(config.getString("SaveMode").equals("ON_DISABLE")){
-            APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在保存领地数据中...");
+            getLogger().info("正在保存领地数据中...");
             try {
-                data.save(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
+                data.save(new File(getDataFolder(), "data.yml"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        APResidence.getProvidingPlugin(APResidence.class).getLogger().info("APResidence 插件卸载成功!");
+        getLogger().info("APResidence 插件卸载成功!");
     }
 
     @Deprecated

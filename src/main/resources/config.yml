@@ -2,6 +2,9 @@
 # default: true
 bstats: true
 
+# What language message file does the plugin need to use
+lang: en_US
+
 # Tool for selecting residences and creating them
 # default:golden_shovel
 SelectionTool: "golden_shovel"
