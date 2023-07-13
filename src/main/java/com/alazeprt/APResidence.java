@@ -85,7 +85,7 @@ public class APResidence extends JavaPlugin {
     @Override
     public void onDisable() {
         if(config.getString("SaveMode").equals("SCHEDULED")){
-            if(!SaveScheduled.saving){
+            if(SaveScheduled.saving){
                 getLogger().info("检测到领地数据正在保存, 将在2秒后再关闭服务器...");
                 try {
                     TimeUnit.SECONDS.sleep(2);
