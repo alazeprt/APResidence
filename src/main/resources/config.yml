@@ -29,3 +29,7 @@ SaveMode: "SCHEDULED"
 # Set the interval for saving residential data (Unit: minutes)
 # default: 10
 SaveInterval: 10
+
+# How many seconds will it delay shutting down the server while still saving data when shutting down the server (Unit: seconds)
+# Setting it to -1 will directly terminate data saving (very not recommended!!!)
+SavingTime: 2

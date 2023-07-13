@@ -19,10 +19,14 @@ public class SaveScheduled extends Thread {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
+                APResidence.getProvidingPlugin(APResidence.class).getLogger().info("正在保存领地数据...");
                 try {
                     data.save(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    APResidence.getProvidingPlugin(APResidence.class).getLogger().info("保存失败! 原因: ");
+                    e.getMessage();
+                } finally {
+                    APResidence.getProvidingPlugin(APResidence.class).getLogger().info("保存成功!");
                 }
             }
         };

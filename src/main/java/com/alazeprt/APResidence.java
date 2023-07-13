@@ -88,7 +88,7 @@ public class APResidence extends JavaPlugin {
             if(SaveScheduled.saving){
                 getLogger().info("检测到领地数据正在保存, 将在2秒后再关闭服务器...");
                 try {
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(config.getInt("SavingTime"));
                 } catch (InterruptedException e) {
                     getLogger().warning("无法启用2秒后关闭进程, 将直接终止保存!");
                     scheduled.stop();
@@ -104,7 +104,10 @@ public class APResidence extends JavaPlugin {
             try {
                 data.save(new File(getDataFolder(), "data.yml"));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                getLogger().info("保存失败! 原因: ");
+                e.getMessage();
+            } finally {
+                APResidence.getProvidingPlugin(APResidence.class).getLogger().info("保存成功!");
             }
         }
         getLogger().info("APResidence 插件卸载成功!");
