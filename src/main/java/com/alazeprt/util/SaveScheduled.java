@@ -30,7 +30,7 @@ public class SaveScheduled extends Thread {
                 }
             }
         };
-        runnable.runTaskTimer(APResidence.getProvidingPlugin(APResidence.class), config.getLong("SaveInterval"), config.getLong("SaveInterval"));
+        runnable.runTaskTimer(APResidence.getProvidingPlugin(APResidence.class), config.getLong("SaveInterval") * 20 * 60, config.getLong("SaveInterval") * 20 * 60);
         saving = false;
     }
 }

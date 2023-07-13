@@ -1,0 +1,71 @@
+# APResidence group configuration file
+# By setting the permission "apres. group. xxx" (xxx is the group name) to the player, the permission for this group can be granted
+
+# Player default group
+# default: default
+default_group: default
+
+# Example Group #1: default
+default:
+  # The weight of this residential group
+  # default: 1
+  weight: 1
+
+  Residence:
+    # Can players create residences
+    # default: true
+    CanCreate: true
+
+    # Maximum number of residences that can be created
+    # default: 5
+    max: 5
+
+    # How long can the x-axis of a residential
+    # default: 16
+    max_x: 16
+
+    # How long can the z-axis of a residential
+    # default: 16
+    max_z: 16
+
+    # The maximum size of a residence (x * z)
+    # defualt: 256
+    max_size: 256
+
+    # The total number of blocks created by the player for the residence
+    # default: 1024
+    total: 1024
+
+    # How many residential blocks do players initially have
+    # default: 128
+    initial: 128
+
+  # This feature requires the installation of the Vault plugin to be used
+  Economy:
+    # Can purchase residential blocks
+    # default: true
+    CanBuy: true
+
+    # How many residential blocks can players purchase at most
+    # default: Residence.total - Residence.initial (1024-128=896)
+    max_blocks: 896
+
+    # Price per residential block
+    # default: 4
+    price: 4
+
+# Example Group #2: vip
+vip:
+  weight: 2
+  Residence:
+    CanCreate: true
+    max: 10
+    max_x: 64
+    max_z: 64
+    max_size: 4096
+    total: 32768
+    initial: 16384
+  Economy:
+    CanBuy: true
+    max_blocks: 16384
+    price: 2

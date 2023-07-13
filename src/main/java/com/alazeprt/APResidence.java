@@ -5,6 +5,7 @@ import com.alazeprt.command.RegisterCommmand;
 import com.alazeprt.event.RegisterEvent;
 import com.alazeprt.util.PreResidence;
 import com.alazeprt.util.SaveScheduled;
+import com.alazeprt.util.UpdateGroupScheduled;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,7 +25,9 @@ public class APResidence extends JavaPlugin {
     public static FileConfiguration data;
     public static FileConfiguration message;
     public static FileConfiguration config;
+    public static FileConfiguration groups;
     private static final SaveScheduled scheduled = new SaveScheduled();
+    private static final UpdateGroupScheduled scheduled2 = new UpdateGroupScheduled();
     public static Economy econ;
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -51,8 +54,12 @@ public class APResidence extends JavaPlugin {
         if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml").exists()){
             saveResource("data.yml", false);
         }
-        config = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
-        data = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
+        if(!new File(getDataFolder(), "groups.yml").exists()){
+            saveResource("groups.yml", false);
+        }
+        config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
+        data = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "data.yml"));
+        groups = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "groups.yml"));
         String lang = config.getString("lang");
         File file = new File(getDataFolder().getPath() + "/lang", lang + ".yml");
         if(!file.exists()){
@@ -70,6 +77,8 @@ public class APResidence extends JavaPlugin {
             getLogger().info("正在启用定时保存策略...");
             scheduled.run();
         }
+        getLogger().info("正在启用定时更新数据线程");
+        scheduled2.run();
         getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
         getLogger().info("正在注册监听器...");
