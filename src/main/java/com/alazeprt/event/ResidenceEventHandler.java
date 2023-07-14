@@ -1,5 +1,6 @@
 package com.alazeprt.event;
 
+import com.alazeprt.util.Pair;
 import com.alazeprt.util.PreResidence;
 import com.alazeprt.util.Residence;
 import org.bukkit.Material;
@@ -73,8 +74,12 @@ public class ResidenceEventHandler implements Listener {
                                 // 设置Location2 & 创建 & 销毁数据
                                 preRes.setLocation2(event.getClickedBlock().getLocation());
                                 if(preRes.canCreate()){
-                                    preRes.create();
-                                    event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location2").replace("&", "§"));
+                                    Pair<Boolean, String> pair = preRes.create();
+                                    if(pair.getKey().equals(true)){
+                                        event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.set_location2").replace("&", "§"));
+                                    } else {
+                                        event.getPlayer().sendMessage(pair.getValue());
+                                    }
                                     preResidence.remove(preRes);
                                 } else {
                                     event.getPlayer().sendMessage(getPrefixW() + message.getString("tool.create_residence.has_residence").replace("&", "§"));

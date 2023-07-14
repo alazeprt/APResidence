@@ -1,5 +1,6 @@
 package com.alazeprt.command;
 
+import com.alazeprt.util.Pair;
 import com.alazeprt.util.PreResidence;
 import com.alazeprt.util.Residence;
 import org.bukkit.ChatColor;
@@ -21,8 +22,12 @@ public class CommandCreate extends ExampleCommand {
         if(!residence.canCreate()){
             player.sendMessage(getPrefixW() + message.getString("commands.exception.residence_exist").replace("&", "§"));
         } else {
-            residence.create();
-            player.sendMessage(getPrefixW() + message.getString("commands.success.create").replace("&", "§"));
+            Pair<Boolean, String> pair = residence.create();
+            if(pair.getKey().equals(true)){
+                player.sendMessage(getPrefixW() + message.getString("commands.success.create").replace("&", "§"));
+            } else {
+                player.sendMessage(pair.getValue());
+            }
         }
     }
 }

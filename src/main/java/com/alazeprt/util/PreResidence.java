@@ -3,10 +3,12 @@ package com.alazeprt.util;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import static com.alazeprt.APResidence.getPrefixW;
+
 public class PreResidence {
     private Location location1 = null;
     private Location location2 = null;
-    private Player player;
+    private final Player player;
     public PreResidence(Player player){
         this.player = player;
     }
@@ -14,11 +16,7 @@ public class PreResidence {
     public boolean canCreate(){
         if(location1 != null && location2 != null){
             Residence residence = new Residence(location1, location2, player, Residence.getMaxId()+2);
-            if(!residence.found()){
-                return false;
-            } else{
-                return true;
-            }
+            return residence.found();
         } else {
             return false;
         }
@@ -37,17 +35,19 @@ public class PreResidence {
     }
 
     public boolean hasLocation1(){
-        if(location1 != null){
-            return true;
-        } else {
-            return false;
-        }
+        return location1 != null;
     }
 
-    public void create(){
+    public Pair<Boolean, String> create(){
         if(canCreate()){
             Residence residence = new Residence(location1, location2, player, Residence.getMaxId() + 1);
-            residence.save();
+            residence.setOnlinePlayer(player);
+            String content = residence.save();
+            if(content.equals("")){
+                return new Pair<>(true, null);
+            } else {
+                return new Pair<>(false, getPrefixW() + content.replace("&", "§"));
+            }
         } else {
             throw new RuntimeException("Incomplete parameters!");
         }

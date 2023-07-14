@@ -11,6 +11,13 @@ commands:
     permission_exist: "&cYou have already set this permission for him!"
     in_disable_world: "&cYou are in the world of uninstalling the APResidence plugin! The command of APResidence plugin will not be available!"
     delete_exception: "&cUnknown residence ID or residence does not belong to you!"
+  create_exception:
+    unknown: "&cAn unknown error occurred while creating the residence! Please contact the administrator for resolution!"
+    no_permission_to_create: "&cYou don't have permission to create a residence!"
+    residence_length_too_long: "&cThe x-axis or z-axis of your residence is too long! The x-axis limit is: $max_x$, z-axis limit is: $max_z$"
+    residence_size_too_big: "&cYour residence is too big! Size limit is: $max_size$"
+    residence_count_too_much: "&cYou can only create a maximum of $count$ residences!"
+    residence_block_total_too_much: "&cYou only have $count$ residential blocks left!"
   success:
     create: "&aSuccessfully created residence!"
     delete: "&aSuccessfully deleted!"

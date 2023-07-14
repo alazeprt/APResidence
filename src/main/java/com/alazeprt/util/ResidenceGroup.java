@@ -1,12 +1,7 @@
 package com.alazeprt.util;
 
-import com.alazeprt.APResidence;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 

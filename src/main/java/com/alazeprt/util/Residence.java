@@ -4,6 +4,7 @@ import com.alazeprt.APResidence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.alazeprt.APResidence.*;
+import static java.lang.Math.abs;
 
 public class Residence {
-    private Location location1;
-    private Location location2;
-    private OfflinePlayer player;
+    private final Location location1;
+    private final Location location2;
+    private final OfflinePlayer player;
+    private Player oplayer = null;
     private final Integer id;
     private final File dataFolder = APResidence.getProvidingPlugin(APResidence.class).getDataFolder();
     public Residence(Location location1, Location location2, OfflinePlayer player, int id){
@@ -23,6 +26,14 @@ public class Residence {
         this.location2 = location2;
         this.player = player;
         this.id = id;
+    }
+
+    public void setOnlinePlayer(Player player){
+        oplayer = player;
+    }
+
+    public boolean hasOnlinePlayer(){
+        return oplayer != null;
     }
 
     public Pair<Location, Location> getLocation(){
@@ -37,9 +48,24 @@ public class Residence {
         return id;
     }
 
-    public boolean save(){
-        if(exist()){
-            return false;
+    public String save(){
+        int id = canCreate();
+        if(id != -1){
+            if(id == 0){
+                return message.getString("commands.create_exception.unknown");
+            } else if(id == 1){
+                return message.getString("commands.create_exception.no_permission_to_create");
+            } else if(id == 2){
+                return message.getString("commands.create_exception.residence_length_too_long");
+            } else if(id == 3){
+                return message.getString("commands.create_exception.residence_size_too_big");
+            } else if(id == 4){
+                return message.getString("commands.create_exception.residence_count_too_much");
+            } else if(id == 5){
+                return message.getString("commands.create_exception.residence_block_total_too_much");
+            } else {
+                return message.getString("commands.create_exception.unknown");
+            }
         } else {
             updateMaxId(id);
             data.set("residence." + id + ".location1", location1);
@@ -52,7 +78,7 @@ public class Residence {
                     throw new RuntimeException(e);
                 }
             }
-            return true;
+            return "";
         }
     }
 
@@ -63,14 +89,6 @@ public class Residence {
             }
         }
         return true;
-    }
-
-    public boolean exist(){
-        if(data.contains("residence." + id + ".location1") && data.contains("residence." + id + ".location2") && data.contains("residence." + id + ".player")){
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public static List<Residence> getResidenceList(){
@@ -119,19 +137,15 @@ public class Residence {
     }
 
     public boolean remove(){
-        if(!exist()){
-            return false;
-        } else {
-            data.set("residence." + id, null);
-            if(config.getString("SaveMode").equals("REAL_TIME")){
-                try {
-                    data.save(new File(dataFolder, "data.yml"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        data.set("residence." + id, null);
+        if(config.getString("SaveMode").equals("REAL_TIME")){
+            try {
+                data.save(new File(dataFolder, "data.yml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            return true;
         }
+        return true;
     }
 
     public static Integer getMaxId(){
@@ -156,5 +170,42 @@ public class Residence {
         double z2 = Math.max(res1.getBlockZ(), res2.getBlockZ());
 
         return location.getBlockX() >= x1 && location.getBlockX() <= x2 && location.getBlockZ() >= z1 && location.getBlockZ() <= z2;
+    }
+
+    public Integer canCreate(){
+        if(!hasOnlinePlayer()){
+            return 0;
+        }
+        ResidenceGroup group = new ResidenceGroup(oplayer);
+        String groupname = group.getGroup();
+        if(!message.getBoolean(groupname + ".Residence.CanCreate")){
+            return 1;
+        }
+        int x1 = location1.getBlockX();
+        int z1 = location1.getBlockZ();
+        int x2 = location2.getBlockX();
+        int z2 = location2.getBlockZ();
+        long size = (long) abs(x1 - x2) * abs(z1 - z2);
+        if(abs(x1-x2) > message.getInt(groupname + ".Residence.max_x") || abs(z1-z2) > message.getInt(groupname + ".Residence.max_z")){
+            return 2;
+        }
+        if(size > message.getLong(groupname + ".Residence.max_size")){
+            return 3;
+        }
+        List<Residence> list = getResidenceList(player);
+        if(list.size() >= message.getInt(groupname + ".Residence.max")){
+            return 4;
+        }
+        long total = 0;
+        for(Residence residence : list){
+            Location location_1 = residence.getLocation().getKey();
+            Location location_2 = residence.getLocation().getValue();
+            total += ((long) abs(location_1.getBlockX() - location_2.getBlockX()) * abs(location_1.getBlockZ() - location_2.getBlockZ()));
+        }
+        total += size;
+        if(total > message.getLong(groupname + ".Residence.total")){
+            return 5;
+        }
+        return -1;
     }
 }

@@ -11,6 +11,13 @@ commands:
     permission_exist: "&c你已经为他设置过此权限了!"
     in_disable_world: "&c你在卸载了APResidence插件的世界内！将无法使用APResidence插件的命令！"
     delete_exception: "&c未知的领地ID或领地不属于你!"
+  create_exception:
+    unknown: "&c在创建领地时出现了未知的错误! 请联系管理员解决!"
+    no_permission_to_create: "&c你没有权限去创建领地!"
+    residence_length_too_long: "&c你的领地的x轴或z轴太长了! x轴限制为: $max_x$, z轴限制为: $max_z$"
+    residence_size_too_big: "&c你的领地太大了! 大小限制为: $max_size$"
+    residence_count_too_much: "&c你最多只能创建$count$个领地!"
+    residence_block_total_too_much: "&c你只剩$count$个领地方块了!"
   success:
     create: "&a成功创建领地!"
     delete: "&a删除成功!"
