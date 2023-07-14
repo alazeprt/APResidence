@@ -40,12 +40,8 @@ public class ResidenceGroup {
         return groups.getKeys(false);
     }
 
-    private String getDefaultGroup(){
-        return groups.getString("default_group");
-    }
-
-    private boolean verifyConfiguration(){
-        return groups.get("default") != null && groups.get("default_group") != null;
+    public static boolean verifyConfiguration(){
+        return groups.get("default") != null;
     }
 
     public void updateGroup(){

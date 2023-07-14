@@ -1,11 +1,7 @@
 # APResidence group configuration file
 # By setting the permission "apres. group. xxx" (xxx is the group name) to the player, the permission for this group can be granted
 
-# Player default group
-# default: default
-default_group: default
-
-# Example Group #1: default
+# The default group, you cannot delete it
 default:
   # The weight of this residential group
   # default: 1
@@ -54,7 +50,7 @@ default:
     # default: 4
     price: 4
 
-# Example Group #2: vip
+# Example Group: vip
 vip:
   weight: 2
   Residence:

@@ -77,7 +77,7 @@ public class APResidence extends JavaPlugin {
             getLogger().info("正在启用定时保存策略...");
             scheduled.run();
         }
-        getLogger().info("正在启用定时更新数据线程");
+        getLogger().info("正在启用定时更新数据线程...");
         scheduled2.run();
         getLogger().info("正在注册指令...");
         RegisterCommmand.register(this);
@@ -119,6 +119,8 @@ public class APResidence extends JavaPlugin {
                 APResidence.getProvidingPlugin(APResidence.class).getLogger().info("保存成功!");
             }
         }
+        getLogger().info("正在关闭定时更新数据线程...");
+        scheduled2.stop();
         getLogger().info("APResidence 插件卸载成功!");
     }
 
@@ -167,8 +169,12 @@ public class APResidence extends JavaPlugin {
         if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml").exists()){
             APResidence.getProvidingPlugin(APResidence.class).saveResource("data.yml", false);
         }
+        if(!new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "groups.yml").exists()){
+            APResidence.getProvidingPlugin(APResidence.class).saveResource("groups.yml", false);
+        }
         config = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "config.yml"));
         data = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "data.yml"));
+        groups = YamlConfiguration.loadConfiguration(new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder(), "groups.yml"));
         String lang = config.getString("lang");
         File file = new File(APResidence.getProvidingPlugin(APResidence.class).getDataFolder().getPath() + "/lang", lang + ".yml");
         if(!file.exists()){
