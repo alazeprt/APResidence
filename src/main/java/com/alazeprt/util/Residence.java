@@ -51,18 +51,20 @@ public class Residence {
     public String save(){
         int id = canCreate();
         if(id != -1){
+            ResidenceGroup group = new ResidenceGroup(oplayer);
+            String groupname = group.getGroup();
             if(id == 0){
                 return message.getString("commands.create_exception.unknown");
             } else if(id == 1){
                 return message.getString("commands.create_exception.no_permission_to_create");
             } else if(id == 2){
-                return message.getString("commands.create_exception.residence_length_too_long");
+                return message.getString("commands.create_exception.residence_length_too_long").replace("$max_x$", String.valueOf(groups.getInt(groupname + ".Residence.max_x"))).replace("$max_z$", String.valueOf(groups.getInt(groupname + ".Residence.max_z")));
             } else if(id == 3){
-                return message.getString("commands.create_exception.residence_size_too_big");
+                return message.getString("commands.create_exception.residence_size_too_big").replace("$max_size$", String.valueOf(groups.getInt(groupname + ".Residence.max_size")));
             } else if(id == 4){
-                return message.getString("commands.create_exception.residence_count_too_much");
+                return message.getString("commands.create_exception.residence_count_too_much").replace("$count$", String.valueOf(groups.getInt(groupname + ".Residence.max")));
             } else if(id == 5){
-                return message.getString("commands.create_exception.residence_block_total_too_much");
+                return message.getString("commands.create_exception.residence_block_total_too_much").replace("$count$", String.valueOf(groups.getInt(groupname + ".Residence.total")));
             } else {
                 return message.getString("commands.create_exception.unknown");
             }

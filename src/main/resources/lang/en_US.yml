@@ -30,6 +30,9 @@ commands:
     list:
       top: "&aResidential permission list($num$)"
       element: "&a$index$. $player$: &e$permission_list$"
+    all:
+      top: "&a领地权限大全($num$)"
+      element: "&a$id$. $name$: &e$description$"
   help:
     top: "&a&lAPResidence Help Document"
     help:
@@ -43,6 +46,7 @@ commands:
       - "&a/apres permission add <player_name> <permission_id/permission_name>&7  - Give players the given permissions for this residence"
       - "&a/apres permission remove <player_name> [permission_id/permission_name]&7  - Remove the given permissions from the player's residence (if no permissions are given, remove all)"
       - "&a/apres permission list&7  - View all permissions of each player in this residence"
+      - "&a/apres permission all&7  - View all residential permissions that can be set"
   list:
     top: "&aResidence List($num$, Record as x, z coordinates): "
     element:

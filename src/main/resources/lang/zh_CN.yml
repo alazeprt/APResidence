@@ -30,6 +30,9 @@ commands:
     list:
       top: "&a领地权限列表($num$)"
       element: "&a$index$. $player$: &e$permission_list$"
+    all:
+      top: "&a领地权限大全($num$)"
+      element: "&a$id$. $name$: &e$description$"
   help:
     top: "&a&lAPResidence帮助文档"
     help:
@@ -43,6 +46,7 @@ commands:
       - "&a/apres permission add <玩家名> <权限ID/权限名称>&7  - 给予玩家此领地的给定权限"
       - "&a/apres permission remove <玩家名> [权限ID/权限名称]&7  - 移除玩家此领地的给定权限(若未给定权限, 则移除所有)"
       - "&a/apres permission list&7  - 查看此领地每位玩家所有的权限"
+      - "&a/apres permission all&7  - 查看可以被设置的所有领地权限"
   list:
     top: "&a领地列表($num$, 记录为x, z坐标): "
     element:

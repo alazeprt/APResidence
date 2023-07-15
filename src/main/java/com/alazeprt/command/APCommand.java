@@ -41,6 +41,8 @@ public class APCommand implements CommandExecutor, TabExecutor {
                     new CommandPermission().executeCommand((Player) sender, args);
                 } else if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("help")){
                     new CommandHelp().executeCommand((Player) sender, args);
+                } else if(sender.hasPermission("apresidence.command.permission") && args[0].equals("permission") && args[1].equals("all")){
+                    new CommandPermission().executeCommand((Player) sender, args);
                 } else if(sender.hasPermission("apresidence.command.delete") && args[0].equals("delete")){
                     new CommandDelete().executeCommand((Player) sender, args);
                 } else {

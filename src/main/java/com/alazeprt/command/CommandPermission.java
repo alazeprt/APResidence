@@ -3,10 +3,12 @@ package com.alazeprt.command;
 import com.alazeprt.util.Residence;
 import com.alazeprt.util.ResidenceManager;
 import com.alazeprt.util.ResidencePermission;
+import com.alazeprt.util.ResidencePermissionsInventoryHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,12 @@ public class CommandPermission extends ExampleCommand {
                 player.sendMessage(content.toString());
                 j++;
             }
+            return;
+        } else if(args.length == 2 && args[1].equals("all")){
+            Inventory inventory = Bukkit.createInventory(null, 9, "Custom GUI");
+            ResidencePermissionsInventoryHolder inventoryHolder = new ResidencePermissionsInventoryHolder(inventory);
+            inventoryHolder.setInventoryItems(inventory);
+            player.openInventory(inventoryHolder.getInventory());
             return;
         }
         OfflinePlayer player1 = Bukkit.getOfflinePlayer(args[2]);
