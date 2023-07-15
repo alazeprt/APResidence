@@ -30,9 +30,6 @@ commands:
     list:
       top: "&aResidential permission list($num$)"
       element: "&a$index$. $player$: &e$permission_list$"
-    all:
-      top: "&a领地权限大全($num$)"
-      element: "&a$id$. $name$: &e$description$"
   help:
     top: "&a&lAPResidence Help Document"
     help:
