@@ -8,5 +8,6 @@ public class RegisterEvent {
         plugin.getServer().getPluginManager().registerEvents(new BuildEventHandler(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new ResidenceEventHandler(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PvPEventHandler(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new InitializeEventHandler(), plugin);
     }
 }
